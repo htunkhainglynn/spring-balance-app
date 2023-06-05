@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+		layout:decorate="~{/layout/authenticated.html}">
+<head>
+<meta charset="UTF-8">
+<title>Users</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+	
+		<div class="card">
+		
+			<div class="card-header">Users Management</div>
+		
+			<div class="card-body">
+				
+				<form action="#" class="row">
+				
+					<div class="col-3">
+					
+						<select name="type" id="type" class="form-control">
+							<option value="">All Users</option>
+							<option value="active">Active</option>
+							<option value="removed">Removed</option>
+						</select>
+					
+					</div>
+					
+					<div class="col-auto">
+						<input type="text" class="form-control" placeholder="Name"/>
+					</div>
+					
+					<div class="col-auto">
+						<input type="date" class="form-control"/>
+					</div>
+					
+					<div class="col-auto">
+						<button class="btn btn-primary">Search</button>
+					</div>
+				
+				</form>
+			
+			</div>
+		</div>
+		
+		<table class="table table-striped mt-4">
+		
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Status</th>
+					<th>Phone</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>Htun Khaing Lynn</td>
+					<td>Active</td>
+					<td>09776864450</td>
+					<td>htunkhainglynn13@gmail.com</td>
+				</tr>
+			</tbody>
+		
+		</table>
+	
+	</div>
+
+</body>
+</html>
