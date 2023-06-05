@@ -1,4 +1,4 @@
-package com.jdc.balance;
+package com.jdc.balance.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
