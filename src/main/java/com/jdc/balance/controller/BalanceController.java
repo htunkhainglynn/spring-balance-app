@@ -15,6 +15,18 @@ import com.jdc.balance.model.domain.entity.Balance.Type;;
 @RequestMapping("user/balance")
 @Controller
 public class BalanceController {
+	
+	@GetMapping
+	public String index() {
+		return "balance-report";
+	}
+	
+	@GetMapping("/{type}")
+	public String balance(ModelMap model, @PathVariable String type) {
+		model.addAttribute("title", type.equals("income") ? "Income Management" : "Expense Management");
+		model.addAttribute("type", type);
+		return "balance-list";
+	}
 
 	@GetMapping("add/{type}")
     public String addNew(@PathVariable String type, ModelMap model) {
@@ -37,11 +49,6 @@ public class BalanceController {
     public String findById(@PathVariable int id, ModelMap model) {
     	System.out.println("Balance ID is %d".formatted(id));
     	return "balance-details";
-    }
-    
-    @GetMapping("delete/{id:\\d+}")
-    public String delete(@PathVariable int id) {
-		return "redirect:/";
     }
 
     public String search(Type type, String category, LocalDate from, LocalDate to) {

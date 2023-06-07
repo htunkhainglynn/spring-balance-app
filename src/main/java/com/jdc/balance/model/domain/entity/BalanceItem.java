@@ -1,17 +1,42 @@
 package com.jdc.balance.model.domain.entity;
 
-public class BalanceItem {
+import java.io.Serializable;
 
-    public BalanceItem() {
-    }
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
+@Entity
+public class BalanceItem implements Serializable {
+
+	@Id
+	@GeneratedValue(generator = "balance_item_seq")
+	@SequenceGenerator(name = "balance_item_seq")
     private int id;
 
+	@Column(nullable = false)
     private String item;
 
+	@Column(nullable = false)
     private int unitPrice;
+	
+	private int quantity;
+	
+	@ManyToOne
+	private Balance balace;
 
-    public int getId() {
+    public Balance getBalace() {
+		return balace;
+	}
+
+	public void setBalace(Balance balace) {
+		this.balace = balace;
+	}
+
+	public int getId() {
 		return id;
 	}
 
@@ -42,7 +67,5 @@ public class BalanceItem {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
-	private int quantity;
 
 }

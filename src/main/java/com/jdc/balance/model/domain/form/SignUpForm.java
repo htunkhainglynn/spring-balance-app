@@ -1,12 +1,24 @@
 package com.jdc.balance.model.domain.form;
 
-public class SingUpForm {
+import javax.validation.constraints.NotBlank;
 
+public class SignUpForm {
+
+	@NotBlank(message = "Name cannot be empty.")
     private String name;
 
+	@NotBlank(message = "Username cannot be empty.")
     private String loginId;
 
-    public String getName() {
+	@NotBlank(message = "Password cannot be empty.")
+	private String password;
+	
+    @Override
+	public String toString() {
+		return "SignUpForm [name=" + name + ", loginId=" + loginId + ", password=" + password + "]";
+	}
+
+	public String getName() {
 		return name;
 	}
 
@@ -29,7 +41,5 @@ public class SingUpForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	private String password;
 
 }

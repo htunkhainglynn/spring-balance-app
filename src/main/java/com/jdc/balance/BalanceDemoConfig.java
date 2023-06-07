@@ -13,9 +13,14 @@ public class BalanceDemoConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("home");
+//		registry.addViewController("/").setViewName("home");
 		registry.addViewController("/signin").setViewName("signin");
-		registry.addViewController("/signup").setViewName("signup");
+//		registry.addViewController("/signup").setViewName("signup");
 	}
 	
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static");
+	}
 }

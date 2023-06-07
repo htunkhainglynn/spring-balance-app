@@ -1,13 +1,34 @@
 package com.jdc.balance.model.domain.entity;
 
-public class User {
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(generator = "user_seq")
+	@SequenceGenerator(name = "user_seq")
 	private int id;
 
+	@Column(nullable = false)
     private String name;
 
+	@Column(nullable = false, unique = true)
     private String loginId;
 
+	@Column(nullable = false)
     private String password;
 
     private String phone;
@@ -15,8 +36,30 @@ public class User {
     private String email;
 
     private boolean active;
+    
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public enum Role {
+    public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@OneToMany(mappedBy = "user")
+    private List<Balance> balance;
+    
+    public List<Balance> getBalance() {
+		return balance;
+	}
+
+	public void setBalance(List<Balance> balance) {
+		this.balance = balance;
+	}
+
+	public enum Role {
         Admin,
         Member
     }

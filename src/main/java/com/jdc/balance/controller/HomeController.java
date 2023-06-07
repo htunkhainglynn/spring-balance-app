@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user/home")
 public class HomeController {
 
-	@GetMapping("/{type}")
-	public String incomes(ModelMap model, @PathVariable String type) {
-		model.addAttribute("title", type.equals("income") ? "Income Management" : "Expense Management");
-		model.addAttribute("type", type);
-		return "balance-list";
+	@GetMapping
+	public String index() {
+		return "home";
 	}
 }

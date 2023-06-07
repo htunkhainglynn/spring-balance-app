@@ -3,6 +3,7 @@ package com.jdc.balance.model.domain.form;
 public class SignInForm {
 
     private String loginId;
+    private String password;
 
     public String getLoginId() {
 		return loginId;
@@ -19,7 +20,5 @@ public class SignInForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	private String password;
 
 }

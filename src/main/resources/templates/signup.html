@@ -10,7 +10,7 @@
 	<div layout:fragment="content">
 	
 		<h3 class="text-center mb-3">Balance Management</h3>
-		<form th:action="@{/signup}" class="card" method="post">
+		<form th:action="@{/signup}" th:object="${form}" class="card" method="post">
 		
 			<div class="card-header"><i class="bi bi-person-check"></i> Sign In</div>
 			
@@ -22,8 +22,9 @@
 						<span class="input-group-text">
 							<i class="bi bi-person-circle"></i> 
 						</span>
-						<input type="text" id="name" placeholder="Enter Name" class="form-control"/>
+						<input type="text" th:field="*{name}" id="name" placeholder="Enter Name" class="form-control"/>
 					</div>
+					<span th:errors="*{name}" class="text-danger"></span>
 				</div>
 			
 				<div class="mb-3">
@@ -32,8 +33,9 @@
 						<span class="input-group-text">
 							<i class="bi-lock"></i>
 						</span>
-						<input type="text" id="login" placeholder="Enter Login ID" class="form-control"/>
+						<input type="text" th:field="*{loginId}" id="login" placeholder="Enter Login ID" class="form-control"/>
 					</div>
+					<span th:errors="*{loginId}" class="text-danger"></span>
 				</div>
 				
 				<div>
@@ -42,8 +44,9 @@
 						<span class="input-group-text">
 							<i class="bi-key"></i>
 						</span>
-						<input type="password" id="password" placeholder="Enter Password" class="form-control"/>
+						<input type="password" th:field="*{password}" id="password" placeholder="Enter Password" class="form-control"/>
 					</div>
+					<span th:errors="*{password}" class="text-danger"></span>
 				</div>
 			
 			</div>
