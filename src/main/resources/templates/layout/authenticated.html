@@ -13,11 +13,12 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <body>
 
 	<div class="container">
 	
-		<h1 class="py-4">Balance Management System</h1>
+		<h1 class="py-4"><i class="bi bi-bank"></i> Balance Management System</h1>
 		
 		<div class="row">
 		
@@ -25,12 +26,12 @@
 			
 				<div class="list-group">
 				
-					<a th:href="@{/}" class="list-group-item">Home</a>
-					<a th:href="@{/user/home/incomes}" class="list-group-item">Income</a>
-					<a th:href="@{/user/home/expenses}" class="list-group-item">Expense</a>
-					<a th:href="@{/user/home/users}" class="list-group-item">Users Management</a>
-					<a href="#" data-bs-toggle="modal" data-bs-target="#changePassword" class="list-group-item">Change Password</a>
-					<a th:href="@{/}" class="list-group-item">Logout</a>
+					<a th:href="@{/}" class="list-group-item"><i class="bi bi-house"></i> Home</a>
+					<a th:href="@{/user/home/income}" class="list-group-item"><i class="bi bi-graph-up"></i></i> Income</a>
+					<a th:href="@{/user/home/expense}" class="list-group-item"><i class="bi bi-graph-down"></i></i> Expense</a>
+					<a th:href="@{/users}" class="list-group-item"><i class="bi bi-people"></i> Users Management</a>
+					<a th:href="@{/user/changepass}" data-bs-toggle="modal" data-bs-target="#changePassword" class="list-group-item"><i class="bi bi-key"></i> Change Password</a>
+					<a th:href="@{/signout}" class="list-group-item"><i class="bi bi-box-arrow-left"></i> Logout</a>
 				
 				</div>
 			</div>
