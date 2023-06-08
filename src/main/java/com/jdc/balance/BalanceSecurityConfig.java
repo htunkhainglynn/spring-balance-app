@@ -23,6 +23,7 @@ public class BalanceSecurityConfig {
 				.mvcMatchers("/user/**").hasAnyAuthority(Role.Member.name(), Role.Admin.name())
 				.mvcMatchers("/admin/**").hasAuthority(Role.Admin.name()).anyRequest().authenticated());
 		
+		http.exceptionHandling().accessDeniedPage("/denied");
 		
 		
 		return http.build();
