@@ -19,10 +19,12 @@ public class UserVo {
 	public UserVo() {}
 	
 	public UserVo(User user) {
+		this.id = user.getId();
 		this.name = user.getName();
 		this.loginId = user.getLoginId();
 		this.email = user.getEmail();
 		this.phone = user.getPhone();
+		this.status = user.isActive();
 	}
 	
     public String getLoginId() {
