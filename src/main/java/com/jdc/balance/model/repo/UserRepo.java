@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jdc.balance.model.domain.entity.User;import groovy.cli.Option;
+import com.jdc.balance.model.domain.entity.User;
 
 public interface UserRepo extends JpaRepository<User, Integer> {
 

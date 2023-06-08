@@ -1,14 +1,37 @@
 package com.jdc.balance.model.domain.vo;
 
+import com.jdc.balance.model.domain.entity.User;
+
 public class UserVo {
 
     private int id;
 
     private String name;
+    
+    private String loginId;
 
-    private boolean status;
+	private boolean status;
 
     private String phone;
+    
+	private String email;
+	
+	public UserVo() {}
+	
+	public UserVo(User user) {
+		this.name = user.getName();
+		this.loginId = user.getLoginId();
+		this.email = user.getEmail();
+		this.phone = user.getPhone();
+	}
+	
+    public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
 
     public int getId() {
 		return id;
@@ -49,7 +72,5 @@ public class UserVo {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	private String email;
 
 }

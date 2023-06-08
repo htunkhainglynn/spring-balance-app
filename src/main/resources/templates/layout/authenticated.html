@@ -31,7 +31,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					<a th:href="@{/user/balance}" class="list-group-item"><i class="bi bi-bar-chart"></i> Balance Report</a>
 					<a th:href="@{/user/balance/income}" class="list-group-item"><i class="bi bi-graph-up"></i></i> Income</a>
 					<a th:href="@{/user/balance/expense}" class="list-group-item"><i class="bi bi-graph-down"></i></i> Expense</a>
-					<a sec:authorize="hasAuthority('Admin')" th:href="@{/admin/users}" class="list-group-item"><i class="bi bi-people"></i> Users Management</a>
+					<a sec:authorize="hasAuthority('Admin')" th:href="@{/admin/users}" class="list-group-item">
+						<i class="bi bi-people"></i> Users Management
+					</a>
+					<a sec:authorize="hasAuthority('Member')" th:href="@{/user/profile}" class="list-group-item">
+						<i class="bi bi-person-circle"></i> Profile
+					</a>
 					<a href="#" data-bs-toggle="modal" data-bs-target="#changePassword" class="list-group-item"><i class="bi bi-key"></i> Change Password</a>
 					<a href="#" id="signoutLink" class="list-group-item"><i class="bi bi-box-arrow-left"></i> Logout</a>
 				

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/authenticated.html}" lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Incomes</title>
+</head>
+<body>
+	<div layout:fragment="content">	
+		
+		<div class="row mb-4">
+		
+			<div class="col">
+				<div class="card">
+					<div class="card-header"><i class="bi bi-person-circle"></i> Profile</div>
+					<div class="card-body">
+						<div class="input-group mb-2">
+							<span class="input-group-text">
+								<i class="bi-person"></i>
+							</span>
+							<span class="form-control" th:text="${user.name}"></span>
+						</div>
+						<div class="input-group mb-2">
+							<span class="input-group-text">
+								<i class="bi-lock"></i>
+							</span>
+							<span class="form-control" th:text="${user.loginId}"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col">
+				<div class="card">
+					<div class="card-header d-flex justify-content-between">
+						<span><i class="bi bi-person-lines-fill"></i> Contact</span>
+						<a data-bs-toggle="modal" data-bs-target="#editContact" href="#"><i class="bi bi-pencil-square"></i></a>
+					</div>
+					
+					<div class="card-body">
+						<div class="input-group mb-2">
+							<span class="input-group-text">
+								<i class="bi-telephone"></i>
+							</span>
+							<span class="form-control" th:text="${user.phone} ?: 'Undefined'"></span>
+						</div>
+						<div class="input-group mb-2">
+							<span class="input-group-text">
+								<i class="bi-envelope"></i>
+							</span>
+							<span class="form-control" th:text="${user.email} ?: 'Undefined'">Email</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		
+		<div class="card">
+			<div class="card-header"><i class="bi bi-terminal"></i> Access Log</div>
+			<div class="card-body">
+				<table class="table table-striped" >
+				
+					<thead>
+						<tr>
+							<th>Access Type</th>
+							<th>Time</th>
+							<th>Remark</th>
+						</tr>
+					</thead>
+				
+				</table>
+			</div>
+		</div>
+		
+		<!-- should be in content fragment -->
+		<div th:insert="/fragments/modals :: editContact" id="editContactContainer"></div>
+	</div>
+</body>
+</html>

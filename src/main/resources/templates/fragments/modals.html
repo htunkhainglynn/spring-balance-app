@@ -8,33 +8,65 @@
 
 	<!-- Change Password Fragment -->
 
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="Change Password" aria-hidden="true"
+		id="changePassword" th:fragment="changePass">
+		<div class="modal-dialog" role="document">
+			<form th:action="@{/user/changepass}" class="modal-content"
+				method="post">
+				<div class="modal-header">
+					<h5>Change Password</h5>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="oldPass" class="mb-1">Old Password</label> <input
+							type="text" id="oldPass" placeholder="Enter Old Password"
+							class="form-control" />
+					</div>
 
-		<div class="modal fade" tabindex="-1" role="dialog"
-			aria-labelledby="Change Password" aria-hidden="true" id="changePassword" th:fragment="changePass">
-			<div class="modal-dialog" role="document">
-				<form th:action="@{/user/changepass}" class="modal-content" method="post">
-					<div class="modal-header">
-						<h5>Change Password</h5>
+					<div class="mb-3">
+						<label for="newPass" class="mb-1">New Password</label> <input
+							type="text" id="newPass" placeholder="Enter New Password"
+							class="form-control" />
 					</div>
-					<div class="modal-body">
-						<div class="mb-3">
-							<label for="oldPass" class="mb-1">Old Password</label>
-							<input type="text" id="oldPass" placeholder="Enter Old Password" class="form-control"/>
-						</div>
-						
-						<div class="mb-3">
-							<label for="newPass" class="mb-1">New Password</label>
-							<input type="text" is="newPass" placeholder="Enter New Password" class="form-control"/>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-primary">Change Password</button>
-					</div>
-				</form>
-			</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary">Change Password</button>
+				</div>
+			</form>
 		</div>
+	</div>
 
+	<!-- Contact Edit Fragment -->
 
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="Edit Contact" aria-hidden="true"
+		id="editContact" th:fragment="editContact">
+		<div class="modal-dialog" role="document">
+			<form th:action="@{/user/profile/contact}" class="modal-content"
+				method="post">
+				<div class="modal-header">
+					<h5>Edit Contact</h5>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="phone" class="mb-1">Phone</label> <input
+							type="text" name="phone" id="phone" placeholder="Enter Phone Number"
+							class="form-control" />
+					</div>
+
+					<div class="mb-3">
+						<label for="email" class="mb-1">Email</label> <input
+							type="text" name="email" id="email" placeholder="Enter Email"
+							class="form-control" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
 </body>
 </html>

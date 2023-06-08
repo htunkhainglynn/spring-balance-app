@@ -1,5 +1,7 @@
 package com.jdc.balance.model.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,7 @@ public class SignUpService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Transactional
 	public void signUp(SignUpForm form) {
 		form.setPassword(passwordEncoder.encode(form.getPassword()));
 		User user = new User(form);
