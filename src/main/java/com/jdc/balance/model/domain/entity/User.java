@@ -12,9 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.jdc.balance.model.domain.form.SignUpForm;
+
 @Entity
 public class User implements Serializable {
-
+	
+	public User() {}
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -38,7 +42,17 @@ public class User implements Serializable {
     private boolean active;
     
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
+    
+	public User(SignUpForm form) {
+		this.name = form.getName();
+		this.loginId = form.getLoginId();
+		this.password = form.getPassword();
+		this.role = Role.Member;
+		this.active = true;
+	}
+
 
     public Role getRole() {
 		return role;
