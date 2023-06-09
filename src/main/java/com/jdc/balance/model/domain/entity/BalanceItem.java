@@ -12,6 +12,8 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class BalanceItem implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(generator = "balance_item_seq")
 	@SequenceGenerator(name = "balance_item_seq")

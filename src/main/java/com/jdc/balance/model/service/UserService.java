@@ -6,9 +6,7 @@ import java.util.function.Consumer;
 
 import javax.transaction.Transactional;
 
-import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;

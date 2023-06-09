@@ -45,7 +45,7 @@ public class BalanceController {
         return "redirect:/";
     }
 
-    @GetMapping("{id:\\d+}")
+    @GetMapping("detail/{id:\\d+}")
     public String findById(@PathVariable int id, ModelMap model) {
     	System.out.println("Balance ID is %d".formatted(id));
     	return "balance-details";
