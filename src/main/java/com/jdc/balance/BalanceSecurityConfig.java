@@ -1,6 +1,8 @@
 package com.jdc.balance;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,5 +34,11 @@ public class BalanceSecurityConfig {
 	@Bean
 	PasswordEncoder passWordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	AuthenticationEventPublisher authenticationEventpublisher() {
+		return new DefaultAuthenticationEventPublisher();
+		
 	}
 }

@@ -16,7 +16,7 @@ import com.jdc.balance.model.domain.form.SignUpForm;
 
 @Entity
 public class User implements Serializable {
-	
+
 	public User() {}
 	
 	private static final long serialVersionUID = 1L;
@@ -29,8 +29,9 @@ public class User implements Serializable {
 	@Column(nullable = false)
     private String name;
 
-	@Column(nullable = false, unique = true)
-    private String loginId;
+	// to be case sensitive
+	@Column(nullable = false, unique = true, columnDefinition = "VARCHAR(255) COLLATE utf8_bin")
+	private String loginId;
 
 	@Column(nullable = false)
     private String password;

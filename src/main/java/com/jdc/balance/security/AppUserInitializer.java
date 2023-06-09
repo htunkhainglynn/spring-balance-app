@@ -1,4 +1,4 @@
-package com.jdc.balance.model.service;
+package com.jdc.balance.security;
 
 import javax.transaction.Transactional;
 
