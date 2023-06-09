@@ -35,7 +35,7 @@ public class UserService {
 			user.setEmail(email);
 			user.setPhone(phone);
 		};
-		
+			
 		// if present do this function
 		repo.findOneByLoginId(username).ifPresent(userConsumer);
 	}

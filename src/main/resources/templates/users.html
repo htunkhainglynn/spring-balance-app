@@ -64,7 +64,7 @@
 					<td th:text="${user.phone}"></td>
 					<td th:text="${user.email}"></td>
 					<td>
-						<a href="#" class="btn btn-link userStatusChangeLink">
+						<a href="#" th:attr="data-id=${user.id}, data-status=${user.status}, data-name=${user.name}" data-bs-toggle="modal" class="btn btn-link userStatusChangeLink">
 							<i th:if="${user.status}" class="bi bi-trash"></i>
 							<i th:unless="${user.status}" class="bi bi-check"></i>
 						</a>
@@ -75,6 +75,7 @@
 		</table>
 		
 		<div th:insert="/fragments/modals :: userStatusChange"></div>
+		<!-- <script th:src="@{/resources/static/js/common.js}"></script> -->
 	
 	</div>
 

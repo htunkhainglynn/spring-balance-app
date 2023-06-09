@@ -21,5 +21,6 @@ public class BalanceDemoConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
 	}
 }
