@@ -1,9 +1,10 @@
 package com.jdc.balance.model.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import com.jdc.balance.model.domain.entity.AccessLog;
+import com.jdc.balance.model.domain.entity.UserAccessLog;
 
-public interface UserAccessRepo extends JpaRepository<AccessLog, Integer> {
+public interface UserAccessRepo extends JpaRepository<UserAccessLog, Integer>, JpaSpecificationExecutor<UserAccessLog> {
 
 }

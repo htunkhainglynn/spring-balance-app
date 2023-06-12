@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:fragment="pagenation">
+		<div class="d-flex justify-content-end">
+			<ul class="pagination">
+            <li class="page-item"><a href="#" class="page-link"><i class="bi bi-skip-backward"></i></a></li>
+            <li class="page-item"><a href="#" class="page-link"><i class="bi bi-skip-start"></i></a></li>
+            <li class="page-item"><a href="#" class="page-link">1</a></li>
+            <li class="page-item"><a href="#" class="page-link"><i class="bi bi-skip-end"></i></a></li>
+            <li class="page-item"><a href="#" class="page-link"><i class="bi bi-skip-forward"></i></a></li>
+        </ul>
+		</div>
+	</div>
+</body>
+</html>

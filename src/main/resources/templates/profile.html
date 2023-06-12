@@ -64,13 +64,21 @@
 				
 					<thead>
 						<tr>
-							<th>Access Type</th>
 							<th>Time</th>
+							<th>Access Type</th>
 							<th>Remark</th>
 						</tr>
 					</thead>
+					<tbody>
+						<tr th:each="user : ${list}">
+							<td th:text="${#temporals.format(user.time, '	yyyy-MM-dd HH:mm:ss')}"></td>
+							<td th:text="${user.type}"></td>
+							<td th:text="${user.errorMessage}"></td>
+						</tr>
+					</tbody>
 				
 				</table>
+				<div th:include="/fragments/component :: pagenation" id="pagenationContainer"></div>
 			</div>
 		</div>
 		

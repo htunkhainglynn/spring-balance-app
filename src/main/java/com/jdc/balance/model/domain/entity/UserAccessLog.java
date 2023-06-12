@@ -9,9 +9,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
-public class AccessLog implements Serializable {
+@Table(name ="access_log")
+public class UserAccessLog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,14 +31,16 @@ public class AccessLog implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	
-	public AccessLog(String username, Type type, LocalDateTime time) {
+	public UserAccessLog() {}
+	
+	public UserAccessLog(String username, Type type, LocalDateTime time) {
 		this.username = username;
 		this.type = type;
 		this.time = time;
 	}
 	
 	// in case there is error
-	public AccessLog(String username, Type type, LocalDateTime time, String errorMessage) {
+	public UserAccessLog(String username, Type type, LocalDateTime time, String errorMessage) {
 		this.username = username;
 		this.type = type;
 		this.time = time;
@@ -84,7 +88,7 @@ public class AccessLog implements Serializable {
 	}
 
 	public enum Type {
-		SignIn, SignOut, Error
+		SIGNIN, SIGNOUT, ERROR
 	}
 
 }

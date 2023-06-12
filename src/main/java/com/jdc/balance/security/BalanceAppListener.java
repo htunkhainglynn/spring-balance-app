@@ -15,8 +15,8 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.web.session.HttpSessionDestroyedEvent;
 import org.springframework.stereotype.Component;
 
-import com.jdc.balance.model.domain.entity.AccessLog;
-import com.jdc.balance.model.domain.entity.AccessLog.Type;
+import com.jdc.balance.model.domain.entity.UserAccessLog;
+import com.jdc.balance.model.domain.entity.UserAccessLog.Type;
 import com.jdc.balance.model.repo.UserAccessRepo;
 
 @Component
@@ -34,7 +34,7 @@ public class BalanceAppListener {
 				new Date(event.getTimestamp()).toInstant(), ZoneId.systemDefault());
 		var username = event.getAuthentication().getName();
 		log.info("{} signed in at {}", username, time);
-		repo.save(new AccessLog(username, Type.SignIn, time));
+		repo.save(new UserAccessLog(username, Type.SIGNIN, time));
 	}
 
 	@EventListener
@@ -44,7 +44,7 @@ public class BalanceAppListener {
 				new Date(event.getTimestamp()).toInstant(), ZoneId.systemDefault());
 		var username = event.getAuthentication().getName();
 		log.info("{} failed to sign in at {}", username, time);
-		repo.save(new AccessLog(username, Type.Error, time, event.getException().getMessage()));
+		repo.save(new UserAccessLog(username, Type.ERROR, time, event.getException().getMessage()));
 	}
 	
 	@EventListener
@@ -56,7 +56,7 @@ public class BalanceAppListener {
 						new Date(event.getTimestamp()).toInstant(), ZoneId.systemDefault());
 				var username = auth.getAuthentication().getName();
 				log.info("{} failed to sign in at {}", username, time);
-				repo.save(new AccessLog(username, Type.SignOut, time));
+				repo.save(new UserAccessLog(username, Type.SIGNOUT, time));
 			});
 		
 	}
