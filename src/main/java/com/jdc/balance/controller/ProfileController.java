@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jdc.balance.controller.utils.PaginationUtils;
 import com.jdc.balance.model.service.UserAccessLogService;
 import com.jdc.balance.model.service.UserService;
 
@@ -35,6 +36,13 @@ public class ProfileController {
 		
 		var accessLog = userAccessLogService.search(username, page, size);
 		model.addAttribute("list", accessLog.getContent());
+		
+		// using builder pattern
+		var pagination = PaginationUtils.builder("/user/profile").page(accessLog).build();
+							
+		
+		model.addAttribute("pagination", pagination);
+		
 		return "profile";
 	}
 	

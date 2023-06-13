@@ -5,14 +5,34 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div th:fragment="pagenation">
+	<div th:fragment="pagination (page)">
 		<div class="d-flex justify-content-end">
 			<ul class="pagination">
-            <li class="page-item"><a href="#" class="page-link"><i class="bi bi-skip-backward"></i></a></li>
-            <li class="page-item"><a href="#" class="page-link"><i class="bi bi-skip-start"></i></a></li>
-            <li class="page-item"><a href="#" class="page-link">1</a></li>
-            <li class="page-item"><a href="#" class="page-link"><i class="bi bi-skip-end"></i></a></li>
-            <li class="page-item"><a href="#" class="page-link"><i class="bi bi-skip-forward"></i></a></li>
+            <li class="page-item">
+            	<a th:href="@{${page.url}(page=0)}" th:classappend="${page.first} ? 'disabled'" class="page-link">
+            		<i class="bi bi-skip-backward"></i>
+            	</a>
+            </li>
+            <li class="page-item">
+            	<a th:href="@{${page.url}(page = ${page.current - 1})}" th:classappend="${page.first} ? 'disabled'" class="page-link">
+            		<i class="bi bi-skip-start"></i>
+            	</a>
+            </li>
+            <li class="page-item" th:each="pageNum : ${page.pages}" >
+            	<a th:href="@{${page.url}(page=${pageNum})}" 
+            	class="page-link" 
+            	th:text="${pageNum + 1}" th:classappend="${page.current == pageNum} ? 'disabled btn btn-primary'"></a>
+            </li>
+            <li class="page-item">
+            	<a th:href="@{${page.url}(page = ${page.current + 1})}" th:classappend="${page.last} ? 'disabled'" class="page-link">
+            		<i class="bi bi-skip-end"></i>
+            	</a>
+            </li>
+            <li class="page-item">
+            	<a th:href="@{${page.url}(page = ${page.total - 1})}" th:classappend="${page.last} ? 'disabled'" class="page-link">
+            		<i class="bi bi-skip-forward"></i>
+            	</a>
+            </li>
         </ul>
 		</div>
 	</div>

@@ -34,6 +34,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					<a sec:authorize="hasAuthority('Admin')" th:href="@{/admin/users}" class="list-group-item">
 						<i class="bi bi-people"></i> Users Management
 					</a>
+					<a sec:authorize="hasAuthority('Admin')" th:href="@{/admin/accesslogs}" class="list-group-item">
+						<i class="bi bi-terminal"></i> Access Logs
+					</a>
 					<a sec:authorize="hasAuthority('Member')" th:href="@{/user/profile}" class="list-group-item">
 						<i class="bi bi-person-circle"></i> Profile
 					</a>
