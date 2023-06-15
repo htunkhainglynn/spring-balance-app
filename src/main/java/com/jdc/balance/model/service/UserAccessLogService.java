@@ -62,12 +62,4 @@ public class UserAccessLogService {
 		
 		return repo.findAll(spec, pageInfo);
 	}
-
-//	public Page<UserAccessLog> searchAll() {
-//		var pageInfo = PageRequest.of(
-//				0, 
-//				5,
-//				Sort.by("time").descending());
-//		return repo.findAll(pageInfo);
-//	}
 }

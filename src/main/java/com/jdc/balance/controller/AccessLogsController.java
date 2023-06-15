@@ -1,14 +1,19 @@
 package com.jdc.balance.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +42,21 @@ public class AccessLogsController {
 		
 		var userList = userAccessLogService.searchAdmin(type, username, date, page, size);
 		model.addAttribute("userList", userList);
-		var pagination = PaginationUtils.builder("/admin/accesslogs").page(userList).build();
+		
+		Map<String, String>  params = new HashMap<>();
+		params.put("type", type == null ? "" : type.name());
+		params.put("username", StringUtils.hasLength(username) ? username : "");
+		params.put("date", date == null ? "" :
+										date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		size.ifPresent(a ->  params.put("size", a.toString()));
+		
+		var pagination = PaginationUtils.builder("/admin/accesslogs")
+										.page(userList)
+										.params(params)
+										.sizes(List.of(5, 10, 25))
+										.sizeChangeFormId("accessLogSearchForm")
+										.build();
+		
 		model.addAttribute("pagination", pagination);
 		return "access-logs";
 	}
