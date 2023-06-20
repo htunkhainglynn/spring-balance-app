@@ -36,7 +36,7 @@
 						<button class="btn btn-danger" type="submit"><i class="bi bi-plus"></i>Add Item</button>
 					</div>
 					
-					<div class="col-auto">
+					<div th:if="${session.balanceEditForm.showSave}" class="col-auto">
 						<a th:href="@{/user/balance-edit/confirm}" class="btn btn-primary">
 							<i class="bi bi-save"></i> Save Balance
 						</a>

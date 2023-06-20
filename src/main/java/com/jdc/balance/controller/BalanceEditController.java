@@ -81,7 +81,6 @@ public class BalanceEditController {
 	public String itemDelete(@ModelAttribute("balanceEditForm") BalanceEditForm form,
 			@RequestParam int id) {
 		
-		System.out.println(id);
 		var itemList = form.getItems();
 		itemList.remove(id);
 		

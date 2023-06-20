@@ -41,4 +41,7 @@ public class BalanceEditForm implements Serializable {
 	public void getTotal() {
     }
 
+	public boolean showSave() {
+		return !this.items.isEmpty();
+	}
 }
