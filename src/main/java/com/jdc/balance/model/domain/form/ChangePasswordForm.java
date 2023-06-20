@@ -2,16 +2,16 @@ package com.jdc.balance.model.domain.form;
 
 public class ChangePasswordForm {
 
-    private int id;
+    private String loginId;
 
     private String oldPassword;
 
-    public int getId() {
-		return id;
+    public String getLoginId() {
+		return loginId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 
 	public String getOldPassword() {

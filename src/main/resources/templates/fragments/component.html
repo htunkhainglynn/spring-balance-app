@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div th:fragment="pagination (page)">
-		<div class="d-flex justify-content-end">
+		<div th:if="${page.isShow}" class="d-flex justify-content-end">
 						
 			<div class="col-auto me-2">
 				<select id="pageSizeChangeSelect" th:if="${#lists.size(page.sizes) gt 0}" th:attr="data-form-id=${page.sizeChangeFormId}" class="form-select" >

@@ -19,31 +19,31 @@
 				
 					<div class="col-auto">
 					
-						<input type="date" value="dateFrom" class="form-control"/>
+						<input type="date" th:value="${param.dateFrom}" name="dateFrom" class="form-control"/>
 					
 					</div>
 					
 					<div class="col-auto">
 					
-						<input type="date" value="dateTo" class="form-control"/>
+						<input type="date" th:value="${param.dateTo}" name="dateTo" class="form-control"/>
 					
 					</div>
 					
-					<div class="col-3">
+					<div class="col">
 					
-						<input type="text" class="form-control" value="category" placeholder="Category"/>
-					
-					</div>
-					
-					<div class="col-auto">
-					
-						<button class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+						<input type="text" name="keyword" th:value="${param.keyword}" class="form-control" placeholder="Keyword"/>
 					
 					</div>
 					
 					<div class="col-auto">
 					
-						<a th:href="@{/user/balance/add/} + ${type}" class="btn btn-danger text-decoration-none"><i class="bi bi-plus"></i>Add Balance</a>
+						<button th:href="@{/user/balance/} + ${type}" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+					
+					</div>
+					
+					<div class="col-auto">
+					
+						<a th:href="@{/user/balance-edit(type=${type})}" class="btn btn-danger text-decoration-none"><i class="bi bi-plus"></i>Add Balance</a>
 					
 					</div>
 				
@@ -60,25 +60,33 @@
 				<tr>
 					<th>Date</th>
 					<th>Category</th>
-					<th>Remark</th>
-					<th class="text-end">Amount</th>
+					<th>Item</th>
+					<th class="text-end">Unit Price</th>
+					<th class="text-end">Quantity</th>
+					<th class="text-end">Total</th>
 				</tr>
 			
 			</thead>
 			
 			<tbody>
 			
-				<tr>
-					<td>2022/06/05</td>
-					<td>Student Fees</td>
-					<td>Java Basic Online course</td>
-					<td class="text-end"><a class="text-decoration-none" th:href="@{'/user/balance/detail/1'}">450,000</a></td>
+				<tr th:each="item : ${list}">
+					<td th:text="${#temporals.format(item.balance.date, 'yyyy-MM-dd')}"></td>
+					<td th:text="${item.balance.category}">Student Fees</td>
+					<td th:text="${item.item}"></td>
+					<td th:text="${#numbers.formatInteger(item.unitPrice)}" class="text-end"></td>
+					<td th:text="${item.quantity}" class="text-end"></td>
+					<td class="text-end">
+						<a class="text-decoration-none" th:href="@{'/user/balance/detail/1'}" 
+							th:text="${#numbers.formatInteger(item.unitPrice * item.quantity)}">450,000</a>
+					</td>
 				</tr>
 			
 			</tbody>
 		
 		</table>
 		
+		<div th:include="/fragments/component :: pagination(${pagination})" id="paginationContainer"></div>
 	</div>
 
 </body>

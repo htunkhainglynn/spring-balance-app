@@ -28,14 +28,14 @@ public class BalanceItem implements Serializable {
 	private int quantity;
 	
 	@ManyToOne
-	private Balance balace;
+	private Balance balance;
 
     public Balance getBalace() {
-		return balace;
+		return balance;
 	}
 
-	public void setBalace(Balance balace) {
-		this.balace = balace;
+	public void setBalace(Balance balance) {
+		this.balance = balance;
 	}
 
 	public int getId() {

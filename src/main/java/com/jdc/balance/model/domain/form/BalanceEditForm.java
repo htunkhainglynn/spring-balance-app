@@ -1,14 +1,29 @@
 package com.jdc.balance.model.domain.form;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class BalanceEditForm {
+import com.jdc.balance.model.domain.entity.Balance.Type;
+
+public class BalanceEditForm implements Serializable {
     
-    private BalanceSummaryForm header;
+    private static final long serialVersionUID = 1L;
+	private BalanceSummaryForm header;
     private List<BalanceItemForm> items;
 
+    public BalanceEditForm() {
+    	header = new BalanceSummaryForm();
+    	items = new ArrayList<>();
+    }
+    
     public BalanceSummaryForm getHeader() {
 		return header;
+	}
+    
+    public BalanceEditForm type(Type type) {
+		header.setType(type);
+		return this;
 	}
 
 	public void setHeader(BalanceSummaryForm header) {

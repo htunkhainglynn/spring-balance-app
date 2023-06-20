@@ -53,6 +53,10 @@ public class PaginationUtils {
 		}
 	}
 	
+	public boolean isShow() {
+		return pages.size() > 1;
+	}
+	
 	public String getSizeChangeFormId() {
 		return sizeChangeFormId;
 	}

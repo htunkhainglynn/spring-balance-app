@@ -11,55 +11,35 @@
 
 		<div class="card">
 
-			<div class="card-header" th:text="${title}"></div>
+			<div class="card-header"><i class="bi-plus"></i> Add <span th:text="${session.balanceEditForm.header.type}"></span></div>
 			
 			<div class="card-body">
 			
-				<form th:action="@{/user/balance}" class="row" method="post">
-				
-					<div class="col-auto">
-						<input type="date" class="form-control" />
-					</div>
-					
-					<div class="col-3">
-						<input type="text" class="form-control" placeholder="Enter Category" />
-					</div>
-					
-					<div class="col-auto">
-						<input type="text" class="form-control text-end" disabled="disabled" value="4500,000"/>
-					</div>
-					
-					<div class="col-auto">
-						<button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Balance</button>
-					</div>
-				
-				</form>
-			
-			</div>
-		</div>
-		
-		<div class="card mt-4">
-
-			<div class="card-header">Add Details</div>
-			
-			<div class="card-body">
-			
-				<form action="#" class="row">
+				<form th:action="@{/user/balance-edit/item}" th:object="${itemForm}" method="post" class="row">
 				
 					<div class="col-3">
-						<input type="text" class="form-control" placeholder="Enter Item Name" />
+						<input type="text" th:field="*{item}" class="form-control" placeholder="Enter Item Name" />
+						<span class="text-danger" th:errors="*{item}"></span>
 					</div>
 					
 					<div class="col-auto">
-						<input type="number" class="form-control" placeholder="Unit Price"/>
+						<input type="number" th:field="*{unitPrice}" class="form-control" placeholder="Unit Price"/>
+						<span class="text-danger" th:errors="*{unitPrice}"></span>
 					</div>
 					
 					<div class="col-2">
-						<input type="number" class="form-control" placeholder="Quantity"/>
+						<input type="number" th:field="*{quantity}" class="form-control" placeholder="Quantity"/>
+						<span class="text-danger" th:errors="*{quantity}"></span>
 					</div>
 					
 					<div class="col-auto">
-						<button class="btn btn-danger"><i class="bi bi-plus"></i>Add Item</button>
+						<button class="btn btn-danger" type="submit"><i class="bi bi-plus"></i>Add Item</button>
+					</div>
+					
+					<div class="col-auto">
+						<a th:href="@{/user/balance-edit/confirm}" class="btn btn-primary">
+							<i class="bi bi-save"></i> Save Balance
+						</a>
 					</div>
 				
 				</form>
@@ -69,7 +49,7 @@
 		
 		<div class="card mt-4">
 
-            <div class="card-header">Details List</div>
+            <div class="card-header"><i class="bi-plus"></i> <span th:text="${session.balanceEditForm.header.type}"></span> Detail List</div>
 
             <div class="card-body">
                 <table class="table table-striped">
@@ -80,17 +60,21 @@
                 			<th>Item Name</th>
                 			<th class="text-end">Unit Price</th>
                 			<th class="text-end">Quantity</th>
-                			<th class="text-end">Price</th>
+                			<th class="text-end">Total</th>
+                			<th class="text-end">Action</th>
                 		</tr>
                 	</thead>
                 
                 	<tbody>
-                		<tr>
-                			<td>1</td>
-                			<td>Java Basic Online</td>
-                			<td class="text-end">150,000</td>
-                			<td class="text-end">3</td>                		
-                			<td class="text-end">450,000</td>
+                		<tr th:each="item, rowNum : ${balanceEditForm.items}">
+                			<td th:text="${rowNum.index + 1}"></td>
+                			<td th:text="${item.item}"></td>
+                			<td th:text="${item.unitPrice}" class="text-end"></td>
+                			<td th:text="${item.quantity}" class="text-end"></td>                		
+                			<td th:text="${item.unitPrice * item.quantity}" class="text-end"></td>
+                			<td class="text-end">
+                				<a th:href="@{/user/balance-edit/item/delete(id=${rowNum.index})}"><i class="bi bi-trash"></i></a>
+                			</td>
                 		</tr>
                 	</tbody>
                 </table>

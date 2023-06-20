@@ -74,8 +74,8 @@ public class Balance implements Serializable {
 	}
 
 	public enum Type {
-        Income,
-        Expense
+        income,
+        expense
     }
 
 }

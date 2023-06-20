@@ -41,7 +41,7 @@ public class AccessLogsController {
 			) {
 		
 		var userList = userAccessLogService.searchAdmin(type, username, date, page, size);
-		model.addAttribute("userList", userList);
+		model.addAttribute("userList", userList.getContent());
 		
 		Map<String, String>  params = new HashMap<>();
 		params.put("type", type == null ? "" : type.name());

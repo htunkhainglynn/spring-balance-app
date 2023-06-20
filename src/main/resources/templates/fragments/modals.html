@@ -17,17 +17,18 @@
 				<div class="modal-header">
 					<h5>Change Password</h5>
 				</div>
+				<input type="hidden" name="loginId" th:value="${#authentication.name}"/>
 				<div class="modal-body">
 					<div class="mb-3">
 						<label for="oldPass" class="mb-1">Old Password</label> <input
 							type="text" id="oldPass" placeholder="Enter Old Password"
-							class="form-control" />
+							class="form-control" name="oldPassword" />
 					</div>
 
 					<div class="mb-3">
 						<label for="newPass" class="mb-1">New Password</label> <input
 							type="text" id="newPass" placeholder="Enter New Password"
-							class="form-control" />
+							class="form-control" name="newPassword"/>
 					</div>
 				</div>
 				<div class="modal-footer">

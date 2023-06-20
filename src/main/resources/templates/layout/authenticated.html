@@ -51,6 +51,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			
 			<div class="col">
 				
+				<div class="alert alert-warning" th:unless="${param.message} eq null" th:text="${param.message}"></div>
 				<div layout:fragment="content"></div>
 				
 			</div>
