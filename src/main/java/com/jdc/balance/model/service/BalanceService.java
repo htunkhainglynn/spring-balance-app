@@ -57,4 +57,9 @@ public class BalanceService {
 	public BalanceEditForm fetchForm(Integer id) {
 		return null;
 	}
+
+	public int save(BalanceEditForm form) {
+		return 0;
+	}
+
 }

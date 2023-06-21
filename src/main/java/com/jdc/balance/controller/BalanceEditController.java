@@ -42,7 +42,7 @@ public class BalanceEditController {
 		}
 
 		// income and expense change session
-		if (type != null && !form.getHeader().getType().equals(type)) {
+		if (type != null && form.getHeader().getType() != type) {
 			form.setHeader(new BalanceSummaryForm());
 			form.getHeader().setType(type);
 			form.getItems().clear();
@@ -57,7 +57,7 @@ public class BalanceEditController {
 
 	@PostMapping("item")
 	public String addItem(@ModelAttribute("balanceEditForm") BalanceEditForm form,
-			@Valid @ModelAttribute("itemForm") BalanceItemForm itemForm, BindingResult result) {
+			@ModelAttribute("itemForm") @Valid BalanceItemForm itemForm, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "balance-edit";
@@ -65,29 +65,37 @@ public class BalanceEditController {
 
 		form.getItems().add(itemForm);
 
-		// to decide where to redirect id or type
-		var queryParam = form.getHeader().getId() == 0 ? "type=%s".formatted(form.getHeader().getType())
-				: "id=%s".formatted(form.getHeader().getId());
-
-		return "redirect:/user/balance-edit?%s".formatted(queryParam);
+		return "redirect:/user/balance-edit?%s".formatted(form.getQueryParam());
 	}
 
 	@PostMapping
-	public String save() {
-		return "redirect:/user/balance/%d".formatted(1);
+	public String save(@ModelAttribute("balanceEditForm") BalanceEditForm form,
+			@ModelAttribute("summaryForm") @Valid BalanceSummaryForm summaryForm, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return "balance-edit-confirm";
+		}
+
+		form.getHeader().setCategory(summaryForm.getCategory());
+		form.getHeader().setDate(summaryForm.getDate());
+
+		var id = service.save(form);
+		form.clear();
+		return "redirect:/user/balance/details/%d".formatted(id);
 	}
 
 	@GetMapping("item/delete")
-	public String itemDelete(@ModelAttribute("balanceEditForm") BalanceEditForm form,
-			@RequestParam int id) {
-		
-		var itemList = form.getItems();
-		itemList.remove(id);
-		
-		var queryParam = form.getHeader().getId() == 0 ? "type=%s".formatted(form.getHeader().getType())
-				: "id=%s".formatted(form.getHeader().getId());
+	public String itemDelete(@ModelAttribute("balanceEditForm") BalanceEditForm form, @RequestParam int id) {
 
-		return "redirect:/user/balance-edit?%s".formatted(queryParam);
+		var item = form.getItems().get(id);
+
+		if (item.getId() == 0) { // it is not from database
+			form.getItems().remove(item);
+		} else {
+			item.setDelete(true);
+		}
+
+		return "redirect:/user/balance-edit?%s".formatted(form.getQueryParam());
 	}
 
 	// create session
@@ -102,11 +110,17 @@ public class BalanceEditController {
 			throw new BalanceAppException("Please set type for form");
 		}
 
+		// set type to balanceHeaderForm
 		return new BalanceEditForm().type(type);
 	}
 
 	@ModelAttribute("itemForm")
 	public BalanceItemForm itemForm() {
 		return new BalanceItemForm();
+	}
+
+	@ModelAttribute("summaryForm")
+	public BalanceSummaryForm summaryForm() {
+		return new BalanceSummaryForm();
 	}
 }

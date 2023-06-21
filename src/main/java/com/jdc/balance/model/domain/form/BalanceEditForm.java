@@ -38,10 +38,26 @@ public class BalanceEditForm implements Serializable {
 		this.items = items;
 	}
 
-	public void getTotal() {
+	public int getTotal() {
+		return items.stream()
+				.reduce(0, (total, a) -> total + (a.getUnitPrice() * a.getQuantity()), Integer::sum);
     }
 
 	public boolean showSave() {
 		return !this.items.isEmpty();
+	}
+
+	// to decide where to redirect id or type
+	public String getQueryParam() {
+		return header.getId() == 0 ? "type=%s".formatted(header.getType()) : "id=%s".formatted(header.getId());
+	}
+	
+	public List<BalanceItemForm> getValidItems() {
+		return items.stream().filter(a -> !a.isDelete()).toList();
+	}
+
+	public void clear() {
+		header = new BalanceSummaryForm();
+		this.items.clear();
 	}
 }

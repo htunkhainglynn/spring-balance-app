@@ -19,6 +19,8 @@ public class BalanceItemForm implements Serializable {
     
 	@Min(value = 1, message = "Quantity must greater than 0")
     private int quantity;
+	
+	private boolean delete;
 
     public int getId() {
 		return id;
@@ -50,5 +52,13 @@ public class BalanceItemForm implements Serializable {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public void setDelete(boolean delete) {
+		this.delete = delete;
+	}
+
+	public boolean isDelete() {
+		return delete;
 	}
 }

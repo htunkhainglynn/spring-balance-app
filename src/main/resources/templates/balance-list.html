@@ -64,6 +64,7 @@
 					<th class="text-end">Unit Price</th>
 					<th class="text-end">Quantity</th>
 					<th class="text-end">Total</th>
+					<th class="text-end">Action</th>
 				</tr>
 			
 			</thead>
@@ -74,11 +75,14 @@
 					<td th:text="${#temporals.format(item.balance.date, 'yyyy-MM-dd')}"></td>
 					<td th:text="${item.balance.category}">Student Fees</td>
 					<td th:text="${item.item}"></td>
-					<td th:text="${#numbers.formatInteger(item.unitPrice)}" class="text-end"></td>
+					<td th:text="${#numbers.formatInteger(item.unitPrice,1,'COMMA')}" class="text-end"></td>
 					<td th:text="${item.quantity}" class="text-end"></td>
 					<td class="text-end">
 						<a class="text-decoration-none" th:href="@{'/user/balance/detail/1'}" 
-							th:text="${#numbers.formatInteger(item.unitPrice * item.quantity)}">450,000</a>
+							th:text="${#numbers.formatInteger(item.unitPrice * item.quantity,1,'COMMA')}">450,000</a>
+					</td>
+					<td class="text-end">
+						<a href="#"><i class="bi-list"></i></a>
 					</td>
 				</tr>
 			

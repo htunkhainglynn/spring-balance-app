@@ -2,6 +2,7 @@ package com.jdc.balance.model.domain.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -23,6 +25,9 @@ public class Balance implements Serializable {
 
     @Column(nullable = false)
     private LocalDate date;
+    
+    @OneToMany(mappedBy = "balance", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<BalanceItem> items;
 
     @Column(nullable =  false)
     private String category;
@@ -77,5 +82,13 @@ public class Balance implements Serializable {
         income,
         expense
     }
+
+	public List<BalanceItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<BalanceItem> items) {
+		this.items = items;
+	}
 
 }

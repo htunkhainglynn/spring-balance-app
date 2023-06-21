@@ -65,5 +65,10 @@ public class BalanceController {
 		
 		return "balance-list";
 	}
+	
+	@GetMapping("details/{id}")
+	public String details(@PathVariable int id) {
+		return "balance-details";
+	}
 
 }

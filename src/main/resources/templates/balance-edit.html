@@ -33,11 +33,11 @@
 					</div>
 					
 					<div class="col-auto">
-						<button class="btn btn-danger" type="submit"><i class="bi bi-plus"></i>Add Item</button>
+						<button class="btn btn-outline-danger" type="submit"><i class="bi bi-plus"></i>Add Item</button>
 					</div>
 					
 					<div th:if="${session.balanceEditForm.showSave}" class="col-auto">
-						<a th:href="@{/user/balance-edit/confirm}" class="btn btn-primary">
+						<a th:href="@{/user/balance-edit/confirm}" class="btn btn-outline-primary">
 							<i class="bi bi-save"></i> Save Balance
 						</a>
 					</div>
@@ -47,41 +47,7 @@
 			</div>
 		</div>
 		
-		<div class="card mt-4">
-
-            <div class="card-header"><i class="bi-plus"></i> <span th:text="${session.balanceEditForm.header.type}"></span> Detail List</div>
-
-            <div class="card-body">
-                <table class="table table-striped">
-                
-                	<thead>
-                		<tr>
-                			<th>No.</th>
-                			<th>Item Name</th>
-                			<th class="text-end">Unit Price</th>
-                			<th class="text-end">Quantity</th>
-                			<th class="text-end">Total</th>
-                			<th class="text-end">Action</th>
-                		</tr>
-                	</thead>
-                
-                	<tbody>
-                		<tr th:each="item, rowNum : ${balanceEditForm.items}">
-                			<td th:text="${rowNum.index + 1}"></td>
-                			<td th:text="${item.item}"></td>
-                			<td th:text="${item.unitPrice}" class="text-end"></td>
-                			<td th:text="${item.quantity}" class="text-end"></td>                		
-                			<td th:text="${item.unitPrice * item.quantity}" class="text-end"></td>
-                			<td class="text-end">
-                				<a th:href="@{/user/balance-edit/item/delete(id=${rowNum.index})}"><i class="bi bi-trash"></i></a>
-                			</td>
-                		</tr>
-                	</tbody>
-                </table>
-            </div>
-
-        </div>
-
+		<div th:replace="/fragments/component :: balanceDetailList(${session.balanceEditForm.validItems}, false)"></div>
 	</div>
 </body>
 </html>

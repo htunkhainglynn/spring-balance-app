@@ -3,7 +3,14 @@ package com.jdc.balance.model.domain.form;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.jdc.balance.model.domain.entity.Balance.Type;
+
 
 public class BalanceSummaryForm implements Serializable {
 
@@ -11,7 +18,12 @@ public class BalanceSummaryForm implements Serializable {
 
 	private int id;
     
+	@NotNull(message = "Enter Date")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
+	
+	@NotBlank(message="Enter Category")
+	private String category;
     
     private Type type;
 
@@ -46,7 +58,5 @@ public class BalanceSummaryForm implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
-	private String category;
 
 }

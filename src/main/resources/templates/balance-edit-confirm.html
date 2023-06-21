@@ -15,26 +15,28 @@
 			
 			<div class="card-body">
 			
-				<form th:action="@{/user/balance}" class="row" method="post">
+				<form th:action="@{/user/balance-edit}" th:object="${summaryForm}" class="row" method="post">
 				
 					<div class="col-auto">
-						<input type="date" class="form-control" />
+						<input type="date" th:field="*{date}" class="form-control" />
+						<span class="text-danger" th:errors="*{date}"></span>
 					</div>
 					
 					<div class="col-3">
-						<input type="text" class="form-control" placeholder="Enter Category" />
+						<input type="text" th:field="*{category}" class="form-control" placeholder="Enter Category" />
+						<span class="text-danger" th:errors="*{category}"></span>
 					</div>
 					
 					<div class="col-auto">
-						<input type="text" class="form-control text-end" disabled="disabled" value="4500,000"/>
+						<input type="text" class="form-control text-end" disabled="disabled" th:value="${session.balanceEditForm.total}"/>
 					</div>
 					
 					<div class="col-auto">
-						<button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save</button>
+						<button type="submit" class="btn btn-outline-primary"><i class="bi bi-save"></i> Save</button>
 					</div>
 					
 					<div class="col-auto">
-						<a th:href="@{/user/balance-edit(type=${session.balanceEditForm.header.type})}" class="btn btn-secondary">
+						<a th:href="@{/user/balance-edit(type=${session.balanceEditForm.header.type})}" class="btn btn-outline-secondary">
 							<i class="bi bi-back"></i> Back
 						</a>
 					</div>
@@ -44,36 +46,7 @@
 			</div>
 		</div>
 		
-		<div class="card mt-4">
-
-             <div class="card-header"><i class="bi-plus"></i> <span th:text="${session.balanceEditForm.header.type}"></span> Detail List</div>
-
-            <div class="card-body">
-                <table class="table table-striped">
-                
-                	<thead>
-                		<tr>
-                			<th>No.</th>
-                			<th>Item Name</th>
-                			<th class="text-end">Unit Price</th>
-                			<th class="text-end">Quantity</th>
-                			<th class="text-end">Price</th>
-                		</tr>
-                	</thead>
-                
-                	<tbody>
-                		<tr>
-                			<td>1</td>
-                			<td>Java Basic Online</td>
-                			<td class="text-end">150,000</td>
-                			<td class="text-end">3</td>                		
-                			<td class="text-end">450,000</td>
-                		</tr>
-                	</tbody>
-                </table>
-            </div>
-
-        </div>
+		<div th:replace="/fragments/component :: balanceDetailList(${session.balanceEditForm.validItems}, true)"></div>
 
 	</div>
 </body>
