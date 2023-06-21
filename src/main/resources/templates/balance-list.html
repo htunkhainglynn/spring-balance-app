@@ -15,7 +15,7 @@
 			
 			<div class="card-body">
 			
-				<form action="#" class="row">
+				<form class="row">
 				
 					<div class="col-auto">
 					
@@ -37,7 +37,7 @@
 					
 					<div class="col-auto">
 					
-						<button th:href="@{/user/balance/} + ${type}" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+						<button type="submit" th:href="@{/user/balance/} + ${type}" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
 					
 					</div>
 					
@@ -64,7 +64,7 @@
 					<th class="text-end">Unit Price</th>
 					<th class="text-end">Quantity</th>
 					<th class="text-end">Total</th>
-					<th class="text-end">Action</th>
+					<th class="text-end">Total</th>
 				</tr>
 			
 			</thead>
@@ -78,7 +78,7 @@
 					<td th:text="${#numbers.formatInteger(item.unitPrice,1,'COMMA')}" class="text-end"></td>
 					<td th:text="${item.quantity}" class="text-end"></td>
 					<td class="text-end">
-						<a class="text-decoration-none" th:href="@{'/user/balance/detail/1'}" 
+						<a class="text-decoration-none" th:href="@{'/user/balance/details/1'}" 
 							th:text="${#numbers.formatInteger(item.unitPrice * item.quantity,1,'COMMA')}">450,000</a>
 					</td>
 					<td class="text-end">

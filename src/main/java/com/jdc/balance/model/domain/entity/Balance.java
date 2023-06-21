@@ -2,6 +2,7 @@ package com.jdc.balance.model.domain.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,6 +37,14 @@ public class Balance implements Serializable {
     private User user;
 
     private Type type;
+    
+    public Balance() {}
+    
+    public Balance(BalanceItem item) {
+    	item.setBalance(this);
+    	items = new ArrayList<>();
+    	items.add(item);
+    }
     
     public User getUser() {
 		return user;

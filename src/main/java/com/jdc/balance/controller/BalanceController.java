@@ -49,6 +49,8 @@ public class BalanceController {
 		var result = balanceService.search(type, dateFrom, dateTo, keyword, page, size);
 		model.addAttribute("list", result);
 		
+		result.forEach(System.out::println);
+		
 		Map<String, String> params = new HashMap<>();
 		params.put("type", type.name());
 		params.put("dateFrom", dateFrom == null ? "" : dateFrom.format(DateTimeFormatter.ofPattern(("yyyy-MM-dd"))));

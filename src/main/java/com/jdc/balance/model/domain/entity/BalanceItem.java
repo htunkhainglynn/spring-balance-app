@@ -30,11 +30,11 @@ public class BalanceItem implements Serializable {
 	@ManyToOne
 	private Balance balance;
 
-    public Balance getBalace() {
+    public Balance getBalance() {
 		return balance;
 	}
 
-	public void setBalace(Balance balance) {
+	public void setBalance(Balance balance) {
 		this.balance = balance;
 	}
 
