@@ -1,5 +1,4 @@
 # Balance Management Application
-#### Video Demo:  https://www.youtube.com/watch?v=caL3tuCMelk
 #### Description: 
 
 With my application, you can easily track your income and expenses. Let me walk you through the main features and functionalities it offers:
@@ -16,7 +15,7 @@ User Profile Management: Regular users will have access to a profile page where 
 
 Password Management: In the change password section, users have the option to modify their existing password. This feature enhances security and allows users to maintain control over their accounts.
 
-Please note that the application does not require manual table creation, as it automatically generates the necessary tables for data storage. Specifically, it utilizes a table named "balance_db" on port 3306 to store and manage the financial information.
+Please note that the application does not require manual table creation, as it automatically generates the necessary tables for data storage. Specifically, it utilizes a table named "balance_db" on port 3306 to store and manage financial information.
 
 Overall, this application provides a convenient and user-friendly interface to effectively track income and expenses, allowing users to maintain control over their financial activities.
 
