@@ -1,6 +1,14 @@
 # Balance Management Application
 #### Video Demo:  https://www.youtube.com/watch?v=caL3tuCMelk
-#### Description: With My application, you can track your income and expense. When you open this application you will see a login form to login, but if you do not have an account you can easily register. When you logged in, you will see the balance report page which includes all of your income, expense, and your net balance. In the income and expense sections, you can add and edit your balance. If you are an admin you can control users, but if you are a user you will see a profile page that shows your access logs and you cam update your contact information. In change password session you can change your password. YOU DO NOT NEED TABLES IT WILL GENERATE FOR YOU, YOU JUST NEED A TABLE NAMED balance_db ON PORT 3306.
+#### Description: 
+
+With My application, you can track your income and expense. 
+
+When you open this application you will see a login form to login, but if you do not have an account you can easily register. When you logged in, you will see the balance report page which includes all of your income, expense, and your net balance. In the income and expense sections, you can add and edit your balance. 
+
+If you are an admin you can control users, but if you are a user you will see a profile page that shows your access logs and you cam update your contact information. In change password session you can change your password. 
+
+YOU DO NOT NEED TABLES IT WILL GENERATE FOR YOU, YOU JUST NEED A TABLE NAMED balance_db ON PORT 3306.
 
 ### Here are screenshots of my application UI.
 ___
