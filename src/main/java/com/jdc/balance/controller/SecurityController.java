@@ -37,7 +37,7 @@ public class SecurityController {
 								.equals(Role.Admin.name()) 
 								|| a.getAuthority()
 								.equals(Role.Member.name()))) {
-			return "redirect:/user/balance";
+			return "redirect:/user/home";
 		}
 		
 		return "signin";
@@ -59,7 +59,6 @@ public class SecurityController {
     @PostMapping("user/changepass")
     public String changePassword(@ModelAttribute ChangePasswordForm form, RedirectAttributes redirect) {
 
-    	System.out.println(form.getOldPassword());
     	userService.changePassword(form);
     	redirect.addFlashAttribute("message", "Your password has been changed successfully.");
         return "redirect:/";
