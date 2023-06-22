@@ -37,7 +37,7 @@ public class SecurityController {
 								.equals(Role.Admin.name()) 
 								|| a.getAuthority()
 								.equals(Role.Member.name()))) {
-			return "redirect:/user/home";
+			return "redirect:/user/balance";
 		}
 		
 		return "signin";
