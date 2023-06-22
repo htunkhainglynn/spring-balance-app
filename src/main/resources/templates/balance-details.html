@@ -15,20 +15,20 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-auto">
-                        <span class="form-control">2023/06/06</span>
+                        <span class="form-control" th:text="${vo.header.date}"></span>
                     </div>
 
                     <div class="col-auto">
-                        <span class="form-control">Income</span>
+                        <span class="form-control" th:text="${vo.header.type}"></span>
                     </div>
 
                     <div class="col-auto">
-                        <span class="form-control">Student Registration</span>
+                        <span class="form-control" th:text="${vo.header.category}"></span>
                     </div>
 
                     <div class="col-auto">
-                        <a th:href="@{/user/balance/edit/1}" class="btn btn-primary text-decoration-none">Edit Details</a>
-                        <a th:href="@{/user/balance/delete/1}" class="btn btn-danger text-decoration-none">Delete Detail</a>
+                        <a th:href="@{/user/balance-edit(id=${vo.header.id})}" class="btn btn-primary text-decoration-none">Edit Details</a>
+                        <a th:href="@{/user/balance/delete/} + ${vo.header.id}" class="btn btn-danger text-decoration-none">Delete Detail</a>
                     </div>
                 </div>
             </div>
@@ -53,20 +53,20 @@
                 	</thead>
                 
                 	<tbody>
-                		<tr>
-                			<td>1</td>
-                			<td>Java Basic Online</td>
-                			<td class="text-end">150,000</td>
-                			<td class="text-end">3</td>                		
-                			<td class="text-end">450,000</td>
+                		<tr th:each="item : ${vo.items}">
+                			<td th:text="${item.id}"></td>
+                			<td th:text="${item.item}">Java Basic Online</td>
+                			<td th:text="${#numbers.formatInteger(item.unitPrice,1,'COMMA')}" class="text-end">150,000</td>
+                			<td th:text="${item.quantity}" class="text-end">3</td>                		
+                			<td th:text="${#numbers.formatInteger(item.unitPrice * item.quantity,1,'COMMA')}" class="text-end">450,000</td>
                 		</tr>
                 	</tbody>
                 	
                 	<tfoot>
             			<tr>
             				<td colspan="3" class="text-end">Total</td>
-            				<td class="text-end">3</td>
-            				<td class="text-end">450,000</td>
+            				<td th:text="${vo.totalQuantity}" class="text-end">3</td>
+            				<td th:text="${#numbers.formatInteger(vo.total,1,'COMMA')}" class="text-end">450,000</td>
             			</tr>    	
                 	</tfoot>
                 </table>

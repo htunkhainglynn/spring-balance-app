@@ -71,18 +71,15 @@
 			
 			<tbody>
 			
-				<tr th:each="item : ${list}">
+				<tr th:each="item : ${list}" th:if="${item.balance.type == type}">
 					<td th:text="${#temporals.format(item.balance.date, 'yyyy-MM-dd')}"></td>
-					<td th:text="${item.balance.category}">Student Fees</td>
+					<td th:text="${item.balance.category}"></td>
 					<td th:text="${item.item}"></td>
 					<td th:text="${#numbers.formatInteger(item.unitPrice,1,'COMMA')}" class="text-end"></td>
 					<td th:text="${item.quantity}" class="text-end"></td>
+					<td class="text-end" th:text="${#numbers.formatInteger(item.unitPrice * item.quantity,1,'COMMA')}"></td>
 					<td class="text-end">
-						<a class="text-decoration-none" th:href="@{'/user/balance/details/1'}" 
-							th:text="${#numbers.formatInteger(item.unitPrice * item.quantity,1,'COMMA')}">450,000</a>
-					</td>
-					<td class="text-end">
-						<a href="#"><i class="bi-list"></i></a>
+						<a th:href="@{'/user/balance/details/'} + ${item.balance.id}"><i class="bi-list"></i></a>
 					</td>
 				</tr>
 			

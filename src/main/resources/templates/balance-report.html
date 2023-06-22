@@ -19,23 +19,22 @@
 				
 					<div class="col-3">
 					
-						<select name="type" id="type" class="form-select">
+						<select name="type" class="form-select">
 							<option value="">All Type</option>
-							<option value="Incomes">Incomes</option>
-							<option value="Expenses">Expenses</option>
+							<option th:each="type : ${balanceTypes}" th:value="${type}" th:text="${type}" th:selected="${#strings.equals(param.type, type)}"></option>
 						</select>
 					
 					</div>
 					
 					<div class="col-auto">
 					
-						<input type="date" id="dateFrom" class="form-control"/>
+						<input type="date" th:value="${param.dateFrom}" name="dateFrom" class="form-control"/>
 					
 					</div>
 					
 					<div class="col-auto">
 					
-						<input type="date" id="dateTo" class="form-control"/>
+						<input type="date" th:value="${param.dateTo}" name="dateTo" class="form-control"/>
 					
 					</div>
 				
@@ -67,19 +66,20 @@
 			
 			<tbody>
 			
-				<tr>
-					<td>2023/06/05</td>
-					<td>Income</td>
-					<td>Java Basic Course Fees</td>
-					<td class="text-end">150,000</td>
-					<td class="text-end"></td>
-					<td class="text-end">150,000</td>
+				<tr th:each="item : ${list}">
+					<td th:text="${#temporals.format(item.date, 'yyyy-MM-dd')}"></td>
+					<td th:text="${item.type}">Income</td>
+					<td th:text="${item.category}">Java Basic Course Fees</td>
+					<td th:text="${#numbers.formatInteger(item.income,1,'COMMA')}" class="text-end">150,000</td>
+					<td th:text="${#numbers.formatInteger(item.expense,1,'COMMA')}" class="text-end"></td>
+					<td th:text="${#numbers.formatInteger(item.balance,1,'COMMA')}" class="text-end">150,000</td>
 				</tr>
 			
 			</tbody>
 		
 		</table>
 				
+		<div th:include="/fragments/component :: pagination(${pagination})" id="paginationContainer"></div>
 	</div>
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jdc.balance.model.domain.entity.Balance;
 import com.jdc.balance.model.domain.entity.Balance.Type;
 
 public class BalanceEditForm implements Serializable {
@@ -15,6 +16,24 @@ public class BalanceEditForm implements Serializable {
     public BalanceEditForm() {
     	header = new BalanceSummaryForm();
     	items = new ArrayList<>();
+    }
+    
+    public BalanceEditForm(Balance entity) {
+    	header = new BalanceSummaryForm();
+    	header.setId(entity.getId());
+    	header.setCategory(entity.getCategory());
+    	header.setDate(entity.getDate());
+    	header.setType(entity.getType());
+    	
+    	// not to be immutable
+    	items = new ArrayList<>(entity.getItems().stream().map(a -> {
+    		var item = new BalanceItemForm();
+    		item.setId(a.getId());
+    		item.setItem(a.getItem());
+    		item.setQuantity(a.getQuantity());
+    		item.setUnitPrice(a.getUnitPrice());
+    		return item;
+    	}).toList());
     }
     
     public BalanceSummaryForm getHeader() {
@@ -39,7 +58,7 @@ public class BalanceEditForm implements Serializable {
 	}
 
 	public int getTotal() {
-		return items.stream()
+		return items.stream().filter(a -> !a.isDelete())
 				.reduce(0, (total, a) -> total + (a.getUnitPrice() * a.getQuantity()), Integer::sum);
     }
 
@@ -56,6 +75,11 @@ public class BalanceEditForm implements Serializable {
 		return items.stream().filter(a -> !a.isDelete()).toList();
 	}
 
+	public int getTotalQuantity() {
+		return items.stream().filter(a -> !a.isDelete())
+				.reduce(0, (total, a) -> total + a.getQuantity(), Integer::sum);
+	}
+	
 	public void clear() {
 		header = new BalanceSummaryForm();
 		this.items.clear();

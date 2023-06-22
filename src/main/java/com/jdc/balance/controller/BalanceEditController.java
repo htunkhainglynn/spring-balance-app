@@ -4,12 +4,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +33,7 @@ public class BalanceEditController {
 
 		// income and expense change session
 		if (null != id && form.getHeader().getId() != id) {
-			var result = service.fetchForm(id);
+			var result = service.findById(id);
 			form.setHeader(result.getHeader());
 			form.setItems(result.getItems());
 		}
@@ -103,7 +100,7 @@ public class BalanceEditController {
 	public BalanceEditForm form(@RequestParam(required = false) Integer id, @RequestParam(required = false) Type type) {
 
 		if (id != null) {
-			return service.fetchForm(id);
+			return service.findById(id);
 		}
 
 		if (type == null) {
@@ -119,8 +116,8 @@ public class BalanceEditController {
 		return new BalanceItemForm();
 	}
 
-	@ModelAttribute("summaryForm")
-	public BalanceSummaryForm summaryForm() {
-		return new BalanceSummaryForm();
+	@ModelAttribute("summaryForm")  // video no 61 6:23
+	public BalanceSummaryForm summaryForm(@ModelAttribute("balanceEditForm") BalanceEditForm form) {
+		return form.getHeader();
 	}
 }

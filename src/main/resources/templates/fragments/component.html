@@ -67,7 +67,7 @@
                 	</thead>
                 
                 	<tbody>
-                		<tr th:each="item, rowNum : ${items}">
+                		<tr th:each="item, rowNum : ${items.validItems}">
                 			<td th:text="${rowNum.index + 1}"></td>
                 			<td th:text="${item.item}"></td>
                 			<td th:text="${#numbers.formatInteger(item.unitPrice,1,'COMMA')}" class="text-end"></td>
@@ -78,6 +78,13 @@
                 			</td>
                 		</tr>
                 	</tbody>
+                	<tfoot>
+            			<tr th:if=${readOnly}>
+            				<td colspan="3" class="text-end">Total</td>
+            				<td th:text="${items.totalQuantity}" class="text-end">3</td>
+            				<td th:text="${#numbers.formatInteger(items.total,1,'COMMA')}" class="text-end">450,000</td>
+            			</tr>    	
+                	</tfoot>
                 </table>
             </div>
 

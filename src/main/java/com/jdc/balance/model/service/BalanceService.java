@@ -3,6 +3,8 @@ package com.jdc.balance.model.service;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +18,7 @@ import com.jdc.balance.model.domain.entity.Balance;
 import com.jdc.balance.model.domain.entity.Balance.Type;
 import com.jdc.balance.model.domain.entity.BalanceItem;
 import com.jdc.balance.model.domain.form.BalanceEditForm;
+import com.jdc.balance.model.domain.vo.BalanceReportVo;
 import com.jdc.balance.model.repo.BalanceItemRepo;
 import com.jdc.balance.model.repo.BalanceRepo;
 import com.jdc.balance.model.repo.UserRepo;
@@ -65,10 +68,11 @@ public class BalanceService {
 		return itemRepo.findAll(spec, pageInfo);
 	}
 
-	public BalanceEditForm fetchForm(Integer id) {
-		return null;
+	public BalanceEditForm findById(Integer id) {
+		return repo.findById(id).map(BalanceEditForm::new).orElseThrow();
 	}
 
+	@Transactional
 	public int save(BalanceEditForm form) {
 
 		// add new or edit
@@ -91,7 +95,7 @@ public class BalanceService {
 
 			if (formItem.isDelete()) {
 				itemRepo.delete(item);
-				continue; // do go below
+				continue; // do not go below
 			}
 
 			item.setItem(formItem.getItem());
@@ -103,6 +107,61 @@ public class BalanceService {
 		}
 
 		return balance.getId();
+	}
+
+	@Transactional
+	public void deleteById(int id) {
+		repo.deleteById(id);
+	}
+
+	@PreAuthorize("authenticated()")
+	public Page<BalanceReportVo> searchReport(Type type, LocalDate dateFrom, LocalDate dateTo, Optional<Integer> page,
+			Optional<Integer> size) {
+		
+		var username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		var pageInfo = PageRequest.of(page.orElse(0), size.orElse(10));
+		
+		Specification<Balance> spec = (root, query, cb) -> cb.equal(root.get("user").get("loginId"),
+				username);
+		
+		if (type != null) {
+			spec = spec.and((root, query, cb) -> cb.equal(root.get("type"), type));
+		}
+		
+		if (dateFrom != null) {
+			spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("date"), dateFrom));
+		}
+		
+		if (dateTo != null) {
+			spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("date"), dateTo));
+		}
+		
+		var result = repo.findAll(spec, pageInfo).map(BalanceReportVo::new);
+		
+		// calculate net amount
+		if (!result.getContent().isEmpty()) {
+			var firstId = result.getContent().get(0).getId();
+			
+			// get balance before first search result
+			var lastIncome = itemRepo.getLastBalance(firstId, Type.income).map(Number::intValue).orElse(0);
+			var lastExpense = itemRepo.getLastBalance(firstId, Type.expense).map(Number::intValue).orElse(0);
+			
+			// calculate total of before first search result
+			var totalBalance = lastIncome - lastExpense;
+			
+			// calculate with search results
+			for (var vo : result.getContent()) {
+				if (vo.getType() == Type.income) {
+					totalBalance += vo.getAmount();
+				} else {
+					totalBalance -= vo.getAmount();
+				}
+				vo.setBalance(totalBalance);
+			}
+		}
+		
+		return result;
 	}
 
 }
