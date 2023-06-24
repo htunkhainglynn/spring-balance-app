@@ -1,6 +1,8 @@
 package com.jdc.balance.model.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -8,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +22,8 @@ import com.jdc.balance.model.domain.entity.Balance.Type;
 import com.jdc.balance.model.domain.entity.BalanceItem;
 import com.jdc.balance.model.domain.form.BalanceEditForm;
 import com.jdc.balance.model.domain.vo.BalanceReportVo;
+import com.jdc.balance.model.domain.vo.LineChartVo;
+import com.jdc.balance.model.domain.vo.PieChartVo;
 import com.jdc.balance.model.repo.BalanceItemRepo;
 import com.jdc.balance.model.repo.BalanceRepo;
 import com.jdc.balance.model.repo.UserRepo;
@@ -163,5 +168,96 @@ public class BalanceService {
 		
 		return result;
 	}
+
+	@PreAuthorize("authenticated()")
+	public PieChartVo searchPie(LocalDate dateFrom, LocalDate dateTo) {
+		PieChartVo pieChartVo = new PieChartVo();
+		
+		var username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Specification<Balance> spec = (root, query, cb) -> cb.equal(root.get("user").get("loginId"),
+				username);
+		
+		var result = pieChartUtil(spec);
+		pieChartVo.setTotal(result.getIncome() - result.getExpense());
+		
+		if (dateFrom != null) {
+			spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("date"), dateFrom));
+		}
+		
+		if (dateTo != null) {
+			spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("date"), dateTo));
+		}
+		
+		result = pieChartUtil(spec);
+		pieChartVo.setIncome(result.getIncome());
+		pieChartVo.setExpense(result.getExpense());
+		
+		return pieChartVo;
+	}
+	
+	private PieChartVo pieChartUtil(Specification<Balance> spec) {
+		PieChartVo pieChartVo = new PieChartVo();
+		var result = repo.findAll(spec);
+		
+		if (!result.isEmpty()) {
+			int totalIncome = 0;
+			int totalExpense = 0;
+			
+			for (Balance balance : result) {
+				totalIncome += itemRepo.getTotalBalance(balance.getId(), Type.income).map(Number::intValue).orElse(0);
+				totalExpense += itemRepo.getTotalBalance(balance.getId(), Type.expense).map(Number::intValue).orElse(0);
+			}
+			
+			pieChartVo.setIncome(totalIncome);
+			pieChartVo.setExpense(totalExpense);
+		}
+		
+		return pieChartVo;
+	}
+
+	@PreAuthorize("authenticated()")
+	public LineChartVo searchBar(LocalDate dateFrom, LocalDate dateTo) {
+		var username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Specification<Balance> spec = (root, query, cb) -> cb.equal(root.get("user").get("loginId"),
+				username);
+		
+		if (dateFrom != null) {
+			spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("date"), dateFrom));
+		}
+		
+		if (dateTo != null) {
+			spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("date"), dateTo));
+		}
+		
+		Sort sort = Sort.by(Sort.Direction.ASC, "date"); // Sort in ascending order by "date" field
+		
+		List<Balance> balance = repo.findAll(spec, sort);
+		
+		List<Integer> incomeList = new ArrayList<>();
+		List<Integer> expenseList = new ArrayList<>();
+		List<Integer> totalList = new ArrayList<>();
+		List<LocalDate> localDateList =new ArrayList<>();
+		
+		if (!balance.isEmpty()) {
+			
+			int totalIncome = 0;
+			int totalExpense = 0;
+			int totalBalance = 0;
+			
+			for (Balance b : balance) {
+				totalIncome += itemRepo.getTotalBalanceByDate(b.getDate(), Type.income).map(Number::intValue).orElse(0);
+				totalExpense += itemRepo.getTotalBalanceByDate(b.getDate(), Type.expense).map(Number::intValue).orElse(0);
+				totalBalance = totalIncome - totalExpense;
+				
+				incomeList.add(totalIncome);
+				expenseList.add(totalExpense);
+				totalList.add(totalBalance);
+				localDateList.add(b.getDate());
+			}
+		}
+		
+		return new LineChartVo(incomeList, expenseList, totalList, localDateList);
+	}
+	
 
 }

@@ -1,11 +1,125 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/layout/authenticated.html}" >
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/authenticated.html}">
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
+
 </head>
 <body>
 
+	<div layout:fragment="content">
+
+		<div th:replace="/fragments/component :: balanceSearch(${balanceType}, true)"></div>
+
+		<div class="row mt-4">
+
+			<div class="col">
+				<script src="https://code.highcharts.com/highcharts.js"></script>
+				<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+				<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+				<div id="container" style="height: 400px; width: 400px;">
+				
+				</div>
+				<script th:inline="javascript">
+					Highcharts.chart('container', {
+						chart : {
+							type : 'pie',
+							options3d : {
+								enabled : true,
+								alpha : 50,
+								beta : 0
+							}
+						},
+						title : {
+							text : [[${title}]]
+						},
+						tooltip : {
+							pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+						},
+						plotOptions : {
+							pie : {
+								allowPointSelect : true,
+								cursor : 'pointer',
+								depth : 35,
+								dataLabels : {
+									enabled : true,
+									format : '{point.name}'
+								}
+							}
+						},
+						series : [ {
+							type : 'pie',
+							name : 'Ratio',
+							data : [ [ 'Incomes', [[${Incomes}]] ], [ 'Expenses', [[${Expenses}]] ]  ]
+						} ]
+					});
+				</script>
+			</div>
+			
+			<div class="col">		
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+				<script src="https://code.highcharts.com/highcharts.js"></script>
+				<script src="https://code.highcharts.com/modules/exporting.js"></script>
+				<div id="barContainer" style="height: 400px; width: 540px" data-highcharts-chart="1"></div>
+				<script th:inline="javascript">
+				    $(function(){
+				    Highcharts.chart('barContainer', {
+				        chart: {
+				            type: 'column'
+				        },
+				        title: {
+				            text: [[${title}]]
+				        },
+				        subtitle: {
+				            text: 'Details'
+				        },
+				        xAxis: {
+				            categories: [[${keySet}]],
+				            crosshair: true
+				        },
+				        yAxis: {
+				            min:0,
+				            max: [[${max}]],
+				            title: {
+				                text: 'Balance'
+				            }
+				        },
+				        tooltip: {
+				            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+				            footerFormat: '</table>',
+				            shared: true,
+				            useHTML: true
+				        },
+				        plotOptions: {
+				            column: {
+				                pointPadding: 0.2,
+				                borderWidth: 0
+				            }
+				        },
+				        series: [{
+				            name: 'Income',
+				            data: [[${incomeValues}]]
+				        },
+				        {
+				            name: 'Expense',
+				            data: [[${expenseValues}]]
+				        },
+				        {
+				            name: 'Total',
+				            data: [[${totalValues}]]
+				        }
+				        ]
+				      });
+				    });
+				</script>		
+			</div>
+		</div>
+		
+	</div>
 </body>
 </html>

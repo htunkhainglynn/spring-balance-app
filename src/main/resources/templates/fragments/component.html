@@ -89,5 +89,46 @@
             </div>
 
         </div>
+        
+        <!-- balance search fragment -->
+        <div class="card" th:fragment="balanceSearch(balanceType, isHome)">
+		
+			<div class="card-header "><i class="bi bi-bar-chart"></i> Balance Report</div>
+			
+			<div class="card-body">
+			
+				<form action="#" class="row">
+				
+					<div class="col-3" th:unless="${isHome}" >
+					
+						<select name="type" class="form-select">
+							<option value="">All Type</option>
+							<option th:each="type : ${balanceTypes}" th:value="${type}" th:text="${type}" th:selected="${#strings.equals(param.type, type)}"></option>
+						</select>
+					
+					</div>
+					
+					<div class="col-auto">
+					
+						<input type="date" th:value="${param.dateFrom}" name="dateFrom" class="form-control"/>
+					
+					</div>
+					
+					<div class="col-auto">
+					
+						<input type="date" th:value="${param.dateTo}" name="dateTo" class="form-control"/>
+					
+					</div>
+				
+					<div class="col-auto">
+					
+						<button class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+					
+					</div>
+				</form>
+				
+			</div>
+		
+		</div>
 </body>
 </html>
