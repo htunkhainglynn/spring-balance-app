@@ -19,8 +19,9 @@ Please note that the application does not require manual table creation, as it a
 
 Overall, this application provides a convenient and user-friendly interface to effectively track income and expenses, allowing users to maintain control over their financial activities.
 
-### Here are screenshots of my application UI.
+### How my application looks like.
 ___
+![Home Page](https://github.com/htunkhainglynn/spring-balance-app/blob/main/assets/home.png)
 ![Login Page](https://github.com/htunkhainglynn/spring-balance-app/blob/main/assets/login.png)
 ![Balance Report](https://github.com/htunkhainglynn/spring-balance-app/blob/main/assets/balance-report.png)
 ![Income / Expense](https://github.com/htunkhainglynn/spring-balance-app/blob/main/assets/income.png)
