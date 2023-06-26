@@ -20,15 +20,25 @@
 				<input type="hidden" name="loginId" th:value="${#authentication.name}"/>
 				<div class="modal-body">
 					<div class="mb-3">
-						<label for="oldPass" class="mb-1">Old Password</label> <input
-							type="text" id="oldPass" placeholder="Enter Old Password"
-							class="form-control" name="oldPassword" />
+						<label for="oldPass" class="mb-1">Old Password</label> 
+						<div class="input-group mt-1">
+							<span class="input-group-text">
+								<i class="bi-lock"></i>
+							</span>
+							<input type="text" id="oldPass" placeholder="Enter Old Password"
+								class="form-control" name="oldPassword" />
+						</div>
 					</div>
 
 					<div class="mb-3">
-						<label for="newPass" class="mb-1">New Password</label> <input
-							type="text" id="newPass" placeholder="Enter New Password"
+						<label for="newPass" class="mb-1">New Password</label>
+						<div class="input-group mt-1">
+							<span class="input-group-text">
+								<i class="bi-key"></i>
+							</span>
+							<input type="text" id="newPass" placeholder="Enter New Password"
 							class="form-control" name="newPassword"/>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
