@@ -46,7 +46,7 @@ public class SignUpForm {
 	}
 	
 	public Authentication authentication() {
-		return new UsernamePasswordAuthenticationToken(loginId, password);
+		return UsernamePasswordAuthenticationToken.unauthenticated(loginId, password);
 	}
 
 }
