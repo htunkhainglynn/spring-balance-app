@@ -1,10 +1,13 @@
 package com.jdc.balance.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,17 +47,26 @@ public class SecurityController {
 	}
 
 	@PostMapping("signup")
-    public String signUp(@ModelAttribute(name="form") @Valid SignUpForm form, BindingResult result) {
+    public String signUp(
+			    		@ModelAttribute(name="form") @Valid SignUpForm form, 
+			    		BindingResult result,
+			    		HttpServletRequest request, HttpServletResponse response) {
 		if (result.hasErrors()) {
 			return "signup";
 		}
 		
-		signUpService.signUp(form);
-        return "redirect:/";
+		System.out.println("Hello World");
+		
+		String url = signUpService.signUp(form, request, response);
+		System.out.println("This is url to redirect : " + url);
+		return url;  // for programetic login
     }
 	
 	@GetMapping("signup")
-	public void loadSignUp() {}
+	public String loadSignUp(Model model, @ModelAttribute("message") String message) {
+		model.addAttribute("message", message);		
+		return "signup";
+	}
 
     @PostMapping("user/changepass")
     public String changePassword(@ModelAttribute ChangePasswordForm form, RedirectAttributes redirect) {

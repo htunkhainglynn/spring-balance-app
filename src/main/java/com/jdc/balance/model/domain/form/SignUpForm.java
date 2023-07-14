@@ -2,6 +2,9 @@ package com.jdc.balance.model.domain.form;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+
 public class SignUpForm {
 
 	@NotBlank(message = "Name cannot be empty.")
@@ -40,6 +43,10 @@ public class SignUpForm {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public Authentication authentication() {
+		return new UsernamePasswordAuthenticationToken(loginId, password);
 	}
 
 }

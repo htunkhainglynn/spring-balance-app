@@ -1,5 +1,6 @@
 package com.jdc.balance.security;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class AppUserInitializer {
 	private UserRepo userRepo;
 	
 	@Transactional
-	@EventListener(classes = ContextRefreshedEvent.class)  // after spring framework is being prepared
+	@PostConstruct  // after spring framework is being prepared
 	public void initializeUser() {
 		if (userRepo.count() == 0) {
 			var user = new User();

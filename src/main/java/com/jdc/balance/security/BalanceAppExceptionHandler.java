@@ -10,9 +10,16 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 public class BalanceAppExceptionHandler {
 
 	@ExceptionHandler(value = BalanceAppException.class)
-	String handle(BalanceAppException e, HttpServletRequest req) {
+	String handleBalanceAppException(BalanceAppException e, HttpServletRequest req) {
+		RequestContextUtils.getOutputFlashMap(req).put("message", e.getMessage());
+
+		return "redirect:/";
+	}
+	
+	@ExceptionHandler(value = SignUpException.class)
+	String handleSIgnUpException(SignUpException e, HttpServletRequest req) {
 		RequestContextUtils.getOutputFlashMap(req).put("message", e.getMessage());
 		
-		return "redirect:/";
+		return "redirect:/signup";
 	}
 }

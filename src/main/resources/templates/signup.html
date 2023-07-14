@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-		layout:decorate="~{/layout/anonymous.html}">
+		layout:decorate="~{/layout/anonymous.html}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Sign In</title>
@@ -10,6 +10,8 @@
 	<div layout:fragment="content">
 	
 		<h3 class="text-center mb-3">Balance Management</h3>
+		<div th:text="${message}" th:class="${message} eq 'User already exists' ? 'alert alert-warning' : ''"></div>
+		
 		<form th:action="@{/signup}" th:object="${form}" class="card" method="post">
 		
 			<div class="card-header"><i class="bi bi-person-check"></i> Sign In</div>

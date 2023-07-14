@@ -31,14 +31,14 @@ public class BalanceEditController {
 	public String edit(@ModelAttribute("balanceEditForm") BalanceEditForm form,
 			@RequestParam(required = false) Integer id, @RequestParam(required = false) Type type) {
 
-		// income and expense change session
+		// income and expense change session (for edit)
 		if (null != id && form.getHeader().getId() != id) {
 			var result = service.findById(id);
 			form.setHeader(result.getHeader());
 			form.setItems(result.getItems());
 		}
 
-		// income and expense change session
+		// income and expense change session (for add)
 		if (type != null && form.getHeader().getType() != type) {
 			form.setHeader(new BalanceSummaryForm());
 			form.getHeader().setType(type);
@@ -98,7 +98,6 @@ public class BalanceEditController {
 	// create session
 	@ModelAttribute("balanceEditForm")
 	public BalanceEditForm form(@RequestParam(required = false) Integer id, @RequestParam(required = false) Type type) {
-
 		if (id != null) {
 			return service.findById(id);
 		}

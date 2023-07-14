@@ -47,7 +47,7 @@ public class BalanceController {
 		params.put("dateTo", dateTo == null ? "" :dateTo.format(DateTimeFormatter.ofPattern(("yyyy-MM-dd"))));
 		
 		var pagination = PaginationUtils
-							.builder("user/balance")
+							.builder("/user/balance")
 							.params(params)
 							.page(result)
 							.build();
@@ -79,7 +79,7 @@ public class BalanceController {
 		params.put("keyword", keyword == null ? "" : keyword);
 		
 		var pagination = PaginationUtils
-							.builder("user/balance/%s".formatted(type))
+							.builder("/user/balance/%s".formatted(type))
 							.params(params)
 							.page(result)
 							.build();

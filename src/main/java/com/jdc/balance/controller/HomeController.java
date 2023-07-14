@@ -71,7 +71,7 @@ public class HomeController {
 		model.addAttribute("expenseValues", expenseList);
 		model.addAttribute("totalValues", totalList);
 		
-		return "home";
+		return "index";
 	}
 	
 	@ModelAttribute("balanceTypes")
