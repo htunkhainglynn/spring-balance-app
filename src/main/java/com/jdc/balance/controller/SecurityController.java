@@ -106,6 +106,13 @@ public class SecurityController {
 		return "redirect:/";
 	}
 
+	@PostMapping("/signout")
+	public String signOut() {
+		SecurityContextHolder.clearContext();
+		return "redirect:/";
+	}
+
+
 	@ModelAttribute(name = "form")
 	SignUpForm signUpForm() {
 		return new SignUpForm();

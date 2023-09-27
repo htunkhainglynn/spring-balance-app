@@ -35,7 +35,7 @@ public class BalanceSecurityConfig {
 			AuthenticationManager authenticationManager) throws Exception {
 		
 		http.formLogin(form -> form.loginPage("/signin").defaultSuccessUrl("/user/home"));
-		http.logout(logout -> logout.logoutUrl("/signout").logoutSuccessUrl("/signin"));
+		http.logout(logout -> logout.logoutUrl("/signout").logoutSuccessUrl("/signout"));
 		
 		http.authenticationManager(authenticationManager);
 		

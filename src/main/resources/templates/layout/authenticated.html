@@ -44,7 +44,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<i class="bi bi-person-circle"></i> Profile
 					</a>
 					<a href="#" data-bs-toggle="modal" data-bs-target="#changePassword" class="list-group-item"><i class="bi bi-key"></i> Change Password</a>
-					<a href="#" id="signoutLink" class="list-group-item"><i class="bi bi-box-arrow-left"></i> Logout</a>
+					<a th:href="@{/signout}" id="signout" class="list-group-item"><i class="bi bi-box-arrow-left"></i> Logout</a>
 				
 				</div>
 			</div>
