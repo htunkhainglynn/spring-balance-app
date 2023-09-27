@@ -78,12 +78,12 @@
 					</tbody>
 				
 				</table>
-				<div th:include="/fragments/component :: pagination(${pagination})" id="paginationContainer"></div>
+				<div th:include="component :: pagination(${pagination})" id="paginationContainer"></div>
 			</div>
 		</div>
 		
 		<!-- should be in content fragment -->
-		<div th:insert="/fragments/modals :: editContact" id="editContactContainer"></div>
+		<div th:insert="modals :: editContact" id="editContactContainer"></div>
 	</div>
 </body>
 </html>

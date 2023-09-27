@@ -9,7 +9,7 @@
 
 	<div layout:fragment="content">
 		
-		<div th:replace="/fragments/component :: balanceSearch(${balanceType}, false)"></div>
+		<div th:replace="component :: balanceSearch(${balanceType}, false)"></div>
 		
 		<table class="table table-striped mt-4">
 		
@@ -41,7 +41,7 @@
 		
 		</table>
 				
-		<div th:include="/fragments/component :: pagination(${pagination})" id="paginationContainer"></div>
+		<div th:include="component :: pagination(${pagination})" id="paginationContainer"></div>
 	</div>
 </body>
 </html>
