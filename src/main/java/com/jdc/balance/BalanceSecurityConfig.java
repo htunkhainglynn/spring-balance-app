@@ -6,7 +6,6 @@ import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
@@ -28,21 +29,36 @@ public class BalanceSecurityConfig {
 	AppUserDetailService userDetailService;
 
 	@Bean
-	SecurityFilterChain httpSecurity(HttpSecurity http) throws Exception {
+	SecurityFilterChain httpSecurity(
+			HttpSecurity http, 
+			PersistentTokenBasedRememberMeServices rememberMeServices,
+			AuthenticationManager authenticationManager) throws Exception {
 		
 		http.formLogin(form -> form.loginPage("/signin").defaultSuccessUrl("/user/home"));
 		http.logout(logout -> logout.logoutUrl("/signout").logoutSuccessUrl("/signin"));
 		
-		http.authorizeHttpRequests(auth -> auth
-				.mvcMatchers("/signin", "/signup", "/home").permitAll()
-				.mvcMatchers("/user/**").hasAnyAuthority(Role.Member.name(), Role.Admin.name())
-				.mvcMatchers("/admin/**").hasAuthority(Role.Admin.name()).anyRequest().authenticated());
+		http.authenticationManager(authenticationManager);
 		
-		http.authenticationManager(authenticationManager(http, passwordEncoder()));
+		http.authorizeHttpRequests(auth -> auth
+				.mvcMatchers("/signin", "/signup", "/home")
+				.permitAll()
+				.mvcMatchers("/user/**")
+				.hasAnyAuthority(Role.Member.name(), Role.Admin.name())
+				.mvcMatchers("/admin/**")
+				.hasAuthority(Role.Admin.name())
+				.anyRequest()
+				.denyAll());
+		
 		http.exceptionHandling().accessDeniedPage("/signin");
 		
+		http.rememberMe(rememberMe -> rememberMe.rememberMeServices(rememberMeServices));
 		
 		return http.build();
+	}
+	
+	@Bean
+	PersistentTokenBasedRememberMeServices rememberMeServices(AppUserDetailService userDetailsService) {
+		return new PersistentTokenBasedRememberMeServices("SGVsbG8gSmF2YQ==", userDetailsService, new InMemoryTokenRepositoryImpl());
 	}
 	
 	@Bean
@@ -53,7 +69,6 @@ public class BalanceSecurityConfig {
 	@Bean
 	AuthenticationEventPublisher authenticationEventpublisher() {
 		return new DefaultAuthenticationEventPublisher();
-		
 	}
 	
 	@Bean  // for logout event activity
@@ -61,31 +76,24 @@ public class BalanceSecurityConfig {
 		return new HttpSessionEventPublisher();
 	}
 	
-	@Bean("authManager")
-	AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) {
-		AuthenticationManager result = null;
+	@Bean
+	SecurityContextRepository securityContextRepository() {
+		return new HttpSessionSecurityContextRepository();
+	}
+	
+	@Bean(name = "authenticationManager")
+	AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
 		AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
 		
 		builder.authenticationProvider(programaticProvider(passwordEncoder));
-		try {
-			result = builder.build();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
-		return result;
+		return builder.build();
 	}
 	
-	@Bean
 	AuthenticationProvider programaticProvider(PasswordEncoder passwordEncoder) {
 		var provider = new DaoAuthenticationProvider();
 		provider.setPasswordEncoder(passwordEncoder);
 		provider.setUserDetailsService(userDetailService);
 		return provider;
-	}
-	
-	@Bean
-	SecurityContextRepository securityContextRepository() {
-		return new HttpSessionSecurityContextRepository();
 	}
 }

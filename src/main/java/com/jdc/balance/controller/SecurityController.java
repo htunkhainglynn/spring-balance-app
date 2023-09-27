@@ -33,7 +33,7 @@ import com.jdc.balance.model.service.UserService;
 public class SecurityController {
 	
 	@Autowired
-	private AuthenticationManager authManager;
+	private AuthenticationManager authenticationManager;
 	
 	private RequestCache requestCache = new HttpSessionRequestCache();
 	
@@ -49,7 +49,7 @@ public class SecurityController {
 	@GetMapping("/")
 	public String index() {
 		var auth = SecurityContextHolder.getContext().getAuthentication();
-
+		
 		if (auth != null && auth.getAuthorities().stream().anyMatch(
 				a -> a.getAuthority().equals(Role.Admin.name()) || a.getAuthority().equals(Role.Member.name()))) {
 			return "redirect:/user/home";
@@ -67,10 +67,9 @@ public class SecurityController {
 		signUpService.signUp(form);
 
 		// Authenticate
-		var authentication = authManager.authenticate(form.authentication());
+		var authentication = authenticationManager.authenticate(form.authentication());
+		System.out.println("authentication: " + authentication);
 		
-		System.out.println(authentication);
-
 		// Set Authentication Result to Security Context
 		var securityContext = SecurityContextHolder.getContext();
 		securityContext.setAuthentication(authentication);
@@ -79,17 +78,19 @@ public class SecurityController {
 		repository.saveContext(securityContext, request, response);
 
 		// Redirect to Saved Request
-		var rediredtUrl = getSavedRequest(request, response).map(SavedRequest::getRedirectUrl).orElse("/customer");
+		var rediredtUrl = getSavedRequest(request, response).map(SavedRequest::getRedirectUrl).orElse("/");
 
+		System.out.println("rediredtUrl: " + rediredtUrl);
+		
 		return "redirect:%s".formatted(rediredtUrl);
 
 	}
 	
 	// sp3-04-52-About-Saved-Request
-		private Optional<SavedRequest> getSavedRequest(HttpServletRequest request, HttpServletResponse response) {
-			SavedRequest savedRequest = requestCache.getRequest(request, response);
-			return Optional.ofNullable(savedRequest);
-		}
+	private Optional<SavedRequest> getSavedRequest(HttpServletRequest request, HttpServletResponse response) {
+		SavedRequest savedRequest = requestCache.getRequest(request, response);
+		return Optional.ofNullable(savedRequest);
+	}
 
 	@GetMapping("signup")
 	public String loadSignUp(Model model, @ModelAttribute("message") String message) {
