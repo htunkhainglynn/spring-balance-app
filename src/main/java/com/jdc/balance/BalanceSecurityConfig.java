@@ -35,7 +35,7 @@ public class BalanceSecurityConfig {
 			AuthenticationManager authenticationManager) throws Exception {
 		
 		http.formLogin(form -> form.loginPage("/signin").defaultSuccessUrl("/user/home"));
-		http.logout(logout -> logout.logoutUrl("/signout").logoutSuccessUrl("/signout"));
+		http.logout(logout -> logout.logoutUrl("/signout").logoutSuccessUrl("/signin"));
 		
 		http.authenticationManager(authenticationManager);
 		
@@ -47,7 +47,7 @@ public class BalanceSecurityConfig {
 				.mvcMatchers("/admin/**")
 				.hasAuthority(Role.Admin.name())
 				.anyRequest()
-				.denyAll());
+				.permitAll());
 		
 		http.exceptionHandling().accessDeniedPage("/signin");
 		
