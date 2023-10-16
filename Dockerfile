@@ -13,4 +13,4 @@ RUN mvn -B clean verify -DskipTests
 EXPOSE 8080
 
 # Start the application
-CMD ["java", "-jar", "-Dspring.profiles.active=production", "target/balance-demo-0.1.jar"]
+CMD ["java", "-jar", "-Dspring.profiles.active=production", "target/balance-demo-1.0.jar"]
