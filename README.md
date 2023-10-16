@@ -1,4 +1,6 @@
-# Balance Management Application ([View Demo](https://spring-balance-app-production.up.railway.app/signin))
+# Balance Management Application 
+####(Application Demo is currently down, fix soon!)
+
 #### Description: 
 
 With my application, you can easily track your income and expenses. Let me walk you through the main features and functionalities it offers:
