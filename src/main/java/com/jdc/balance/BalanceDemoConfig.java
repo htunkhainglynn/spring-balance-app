@@ -13,7 +13,7 @@ import nz.net.ultraq.thymeleaf.LayoutDialect;
 @Configuration
 @EnableWebMvc
 public class BalanceDemoConfig implements WebMvcConfigurer {
-
+	
 	@Bean
 	public LayoutDialect layoutDialect() {
 		return new LayoutDialect();
