@@ -1,5 +1,5 @@
 # Balance Management Application 
-#### (Application Demo is currently down, fix soon!)
+#### (Application Demo is currently down (end free trial), will fix soon!)
 
 #### Description: 
 
